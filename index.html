@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>AXIS // DOMINANCE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Inter:wght@400;500;600;800&family=Oswald:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'Cairo', 'sans-serif'], // Cairo ajouté pour l'arabe
+              display: ['Oswald', 'Cairo', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            },
+            colors: {
+              bg: '#FFFFFF', 
+              fg: '#000000', 
+              concrete: '#F3F3F3',
+              accent: '#000000',
+              error: '#D00000' // Rouge plus sang/urgent
+            },
+            animation: {
+              'marquee': 'marquee 20s linear infinite',
+              'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            },
+            keyframes: {
+              marquee: {
+                '0%': { transform: 'translateX(0%)' },
+                '100%': { transform: 'translateX(-100%)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      :root {
+        --bg-color: #FFFFFF;
+        --text-color: #000000;
+      }
+      body {
+        font-family: 'Inter', 'Cairo', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        overflow-x: hidden;
+      }
+      
+      .border-axis {
+        border: 2px solid #000000;
+      }
+      
+      .btn-axis {
+        background: #000000;
+        color: #FFFFFF;
+        text-transform: uppercase;
+        font-family: 'Oswald', 'Cairo', sans-serif;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        transition: all 0.2s ease;
+      }
+      .btn-axis:hover {
+        background: #FFFFFF;
+        color: #000000;
+        border: 2px solid #000000;
+      }
+
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      
+      /* RTL Specific adjustments if needed */
+      [dir="rtl"] .btn-axis {
+        letter-spacing: 0;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react-router-dom": "https://esm.sh/react-router-dom@6.22.3",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
