@@ -9,7 +9,6 @@ import ProductDetail from './pages/ProductDetail';
 import Checkout from './pages/Checkout';
 import SalesNotification from './components/SalesNotification';
 
-
 function ScrollToTop() {
   const { pathname } = useLocation();
 
