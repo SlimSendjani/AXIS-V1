@@ -3,15 +3,17 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Package, Truck, MapPin, User, Phone, CheckCircle, AlertCircle } from 'lucide-react';
 import { Translation, Product, Language } from '../types';
 import { useCart } from '../contexts/CartContext';
-import { SHIPPING_RATES, getShippingRate, calculateShipping, FREE_SHIPPING_THRESHOLD } from '../constants/shipping';
+import { SHIPPING_RATES, getShippingRate, calculateShipping, FREE_SHIPPING_THRESHOLD, PHONE_NUMBER_WHATSAPP } from '../constants';
 import { submitOrder, generateOrderNumber, generateWhatsAppMessage, OrderData } from '../services/orderService';
-import { PHONE_NUMBER_WHATSAPP, BRAND_NAME } from '../constants';
+import { getProducts, TRANSLATIONS } from '../constants';
 
 interface CheckoutProps {
   t: Translation;
   products: Product[];
   lang: Language;
 }
+
+const BRAND_NAME = 'AXIS';
 
 const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
   const navigate = useNavigate();
@@ -286,7 +288,7 @@ const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
                   onChange={(e) => setFormData({...formData, address: e.target.value})}
                   rows={3}
                   className={`w-full bg-transparent border-2 ${errors.address ? 'border-error' : 'border-fg'} px-4 py-3 font-mono focus:outline-none focus:border-gold transition-colors resize-none`}
-                  placeholder={isAr ? 'العنوان الكامل (الحي، الشارع، رقم البناية...)' : 'Adresse complète (quartier, rue, n° bâtiment...)'}
+                  placeholder={isAr ? 'العنوان الكامل (الحي, الشارع, رقم البناية...)' : 'Adresse complète (quartier, rue, n° bâtiment...)'}
                 />
                 {errors.address && <p className="text-error text-xs mt-1 font-mono">{errors.address}</p>}
               </div>
