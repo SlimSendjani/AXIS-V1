@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ShoppingBag, X, Send, Loader } from 'lucide-react';
 import { Translation, Language, CartItem, Order } from '../types';
-import { WILAYAS, getShippingPrice, ADMIN_EMAIL } from '../constants';
+import { WILAYAS, calculateShipping } from '../constants';
 import { syncOrderComplete } from '../utils/googleSheetsSync';
 
 interface CartProps {
@@ -15,6 +15,7 @@ const Cart: React.FC<CartProps> = ({ t, lang, products }) => {
   const [showCart, setShowCart] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
   const [selectedWilaya, setSelectedWilaya] = useState('');
+  const [deliveryType, setDeliveryType] = useState<'home' | 'pickup'>('home');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -73,7 +74,7 @@ const Cart: React.FC<CartProps> = ({ t, lang, products }) => {
   };
 
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const shippingCost = selectedWilaya ? getShippingPrice(selectedWilaya) : 0;
+  const shippingCost = selectedWilaya ? calculateShipping(selectedWilaya, subtotal, deliveryType) : 0;
   const total = subtotal + shippingCost;
 
   const handleCheckout = async () => {
@@ -205,7 +206,7 @@ const Cart: React.FC<CartProps> = ({ t, lang, products }) => {
       {/* Modal checkout */}
       {showCheckout && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-bg border-2 border-fg w-full max-w-md max-h-96 overflow-y-auto p-6 rounded-lg">
+          <div className="bg-bg border-2 border-fg w-full max-w-md max-h-[90vh] overflow-y-auto p-6 rounded-lg">
             <h2 className="text-2xl font-bold mb-4 uppercase">{t.secureCheckout}</h2>
 
             {orderPlaced ? (
@@ -254,6 +255,30 @@ const Cart: React.FC<CartProps> = ({ t, lang, products }) => {
                       </option>
                     ))}
                   </select>
+                  <div className="flex gap-2">
+                    <label className="flex items-center gap-2 text-sm">
+                      <input
+                        type="radio"
+                        name="delivery"
+                        value="home"
+                        checked={deliveryType === 'home'}
+                        onChange={() => setDeliveryType('home')}
+                        disabled={isSubmitting}
+                      />
+                      {lang === 'ar' ? 'المنزل' : 'À domicile'}
+                    </label>
+                    <label className="flex items-center gap-2 text-sm">
+                      <input
+                        type="radio"
+                        name="delivery"
+                        value="pickup"
+                        checked={deliveryType === 'pickup'}
+                        onChange={() => setDeliveryType('pickup')}
+                        disabled={isSubmitting}
+                      />
+                      {lang === 'ar' ? 'نقطة استلام' : 'Point relais'}
+                    </label>
+                  </div>
                   <textarea
                     placeholder={t.sector}
                     value={formData.address}
