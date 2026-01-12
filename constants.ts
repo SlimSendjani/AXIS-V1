@@ -42,6 +42,9 @@ export const SHIPPING_ZONES = {
   zone5: { name: "Ouest Algérie", price: 1200, wilayas: ["10", "11", "34"] },
 };
 
+// Alias for backward compatibility
+export const SHIPPING_RATES = SHIPPING_ZONES;
+
 export const getShippingPrice = (wilayaCode: string): number => {
   for (const zone of Object.values(SHIPPING_ZONES)) {
     if (zone.wilayas.includes(wilayaCode)) {
@@ -58,6 +61,23 @@ export const getShippingZone = (wilayaCode: string): string => {
     }
   }
   return "Livraison Standard";
+};
+
+export const calculateShipping = (wilayaCode: string, subtotal: number, deliveryType: 'home' | 'pickup'): number => {
+  const zonePrice = getShippingPrice(wilayaCode);
+  // Example logic: Pickup is cheaper? Or same? Assuming same for now to be safe, or -200DA if generic.
+  // Actually, let's just return zonePrice to match getShippingPrice behavior for now.
+  return zonePrice;
+};
+
+export const FREE_SHIPPING_THRESHOLD = 8000; // Free shipping over 8000 DA
+
+// Alias for backward compatibility
+export const getShippingRate = getShippingPrice;
+
+export const getWilayaName = (wilayaCode: string): string => {
+  const wilaya = WILAYAS.find(w => w.code === wilayaCode);
+  return wilaya ? wilaya.name : wilayaCode;
 };
 
 export const TRANSLATIONS: Record<Language, Translation> = {
@@ -311,7 +331,7 @@ export const TRANSLATIONS: Record<Language, Translation> = {
 
 export const getProducts = (lang: Language): Product[] => {
   const isAr = lang === 'ar';
-  
+
   return [
     {
       id: "shapewear",
@@ -320,7 +340,7 @@ export const getProducts = (lang: Language): Product[] => {
       price: 5900,
       oldPrice: 8500,
       shortDesc: isAr ? "يخفي العيوب فوراً ويعيد رسم القوام." : "Efface les imperfections instantanément. Redéfinit la silhouette.",
-      description: isAr 
+      description: isAr
         ? "درعك اليومي ضد الترهل. قماش ضاغط متطور يعمل كبشرة ثانية، يشد البطن، يرفع الصدر، وينحت الخصر في لحظة ارتدائه. ثقة مطلقة تحت أي ملابس."
         : "Votre armure quotidienne contre le relâchement. Textile compressif avancé agissant comme une seconde peau : gaine le ventre, remonte le buste et sculpte la taille dès l'enfilage. Confiance absolue sous n'importe quelle tenue.",
       image: PRODUCT_IMGS.shapewear,
@@ -341,7 +361,7 @@ export const getProducts = (lang: Language): Product[] => {
       price: 3500,
       oldPrice: 5500,
       shortDesc: isAr ? "افرض حضورك بقامة مستقيمة." : "Imposez votre présence avec une posture droite.",
-      description: isAr 
+      description: isAr
         ? "لغة الجسد هي كل شيء. هذا الهيكل يجبر كتفيك على العودة للخلف وصدرك للأمام. يعيد برمجة عضلات ظهرك لتقف بشموخ وتتنفس بعمق. استعد هيبتك."
         : "Le langage corporel est tout. Ce rig force vos épaules vers l'arrière et votre torse vers l'avant. Il reprogramme vos muscles dorsaux pour vous tenir droit et respirer profondément. Réclamez votre espace.",
       image: PRODUCT_IMGS.posture,
@@ -362,7 +382,7 @@ export const getProducts = (lang: Language): Product[] => {
       price: 2900,
       oldPrice: 4200,
       shortDesc: isAr ? "حول ركبتك إلى حصن منيع." : "Transformez votre genou en forteresse.",
-      description: isAr 
+      description: isAr
         ? "الألم يجعلك ضعيفاً. هذه الدعامة توفر ثباتاً ميكانيكياً وحرارياً للركبة، مما يسمح لك بالحركة، الجري، والعمل دون خوف من الإصابة أو الألم."
         : "La douleur vous affaiblit. Cette genouillère offre une stabilité mécanique et thermique, vous permettant de bouger, courir et travailler sans la peur de la blessure ou de la douleur.",
       image: PRODUCT_IMGS.knee,
@@ -383,7 +403,7 @@ export const getProducts = (lang: Language): Product[] => {
       price: 2500,
       oldPrice: 3800,
       shortDesc: isAr ? "وداعاً لآلام القدم. امشِ براحة تامة." : "Adieu les douleurs plantaires. Marchez avec un confort total.",
-      description: isAr 
+      description: isAr
         ? "سمال مصممة خصيصاً لعلاج التهاب اللفافة الأخمصية. دعم مثالي للقوس، توزيع متساوي للضغط، وامتصاص الصدمات. راحة فورية من أول خطوة."
         : "Semelles conçues spécifiquement pour la fasciite plantaire. Support optimal de la voûte, répartition uniforme de la pression et absorption des chocs. Soulagement immédiat dès le premier pas.",
       image: PRODUCT_IMGS.insoles,

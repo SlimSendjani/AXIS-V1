@@ -3,9 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Package, Truck, MapPin, User, Phone, CheckCircle, AlertCircle } from 'lucide-react';
 import { Translation, Product, Language } from '../types';
 import { useCart } from '../contexts/CartContext';
-import { SHIPPING_RATES, getShippingRate, calculateShipping, FREE_SHIPPING_THRESHOLD, PHONE_NUMBER_WHATSAPP } from '../constants';
+import { WILAYAS, getShippingPrice, calculateShipping, FREE_SHIPPING_THRESHOLD, PHONE_NUMBER_WHATSAPP, getWilayaName } from '../constants';
 import { submitOrder, generateOrderNumber, generateWhatsAppMessage, OrderData } from '../services/orderService';
 import { getProducts, TRANSLATIONS } from '../constants';
+
 
 interface CheckoutProps {
   t: Translation;
@@ -35,7 +36,6 @@ const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
   const [orderNumber, setOrderNumber] = useState('');
 
   const subtotal = getTotal();
-  const selectedWilaya = getShippingRate(formData.wilayaCode);
   const shippingCost = formData.wilayaCode ? calculateShipping(formData.wilayaCode, subtotal, formData.deliveryType) : 0;
   const total = subtotal + shippingCost;
   const isFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD;
@@ -73,18 +73,18 @@ const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
-    
+
     setIsSubmitting(true);
 
     const newOrderNumber = generateOrderNumber();
-    
+
     const orderData: OrderData = {
       fullName: formData.fullName,
       phone: formData.phone,
       wilayaCode: formData.wilayaCode,
-      wilayaName: selectedWilaya ? (isAr ? selectedWilaya.arName : selectedWilaya.name) : '',
+      wilayaName: getWilayaName(formData.wilayaCode),
       address: formData.address,
       deliveryType: formData.deliveryType,
       items: items.map(item => ({
@@ -134,11 +134,11 @@ const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
           </p>
           <p className="text-2xl font-bold text-gold mb-6">{orderNumber}</p>
           <p className="text-sm opacity-70 mb-8">
-            {isAr 
+            {isAr
               ? 'سنتصل بك قريباً لتأكيد الطلب. شكراً لثقتك في AXIS!'
               : 'Nous vous contacterons bientôt pour confirmer. Merci de votre confiance!'}
           </p>
-          <Link 
+          <Link
             to="/"
             className="inline-block bg-fg text-bg px-8 py-4 font-bold uppercase tracking-wider hover:bg-gold hover:text-fg transition-colors"
           >
@@ -165,11 +165,11 @@ const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
 
       <div className="container mx-auto px-6 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          
+
           {/* Formulaire */}
           <div>
             <h2 className="text-3xl font-display font-bold mb-8 uppercase">{t.secureCheckout}</h2>
-            
+
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Nom */}
               <div>
@@ -180,7 +180,7 @@ const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
                 <input
                   type="text"
                   value={formData.fullName}
-                  onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                   className={`w-full bg-transparent border-2 ${errors.fullName ? 'border-error' : 'border-fg'} px-4 py-3 font-mono focus:outline-none focus:border-gold transition-colors`}
                   placeholder={isAr ? 'الاسم الكامل' : 'Nom complet'}
                 />
@@ -196,7 +196,7 @@ const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
                 <input
                   type="tel"
                   value={formData.phone}
-                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className={`w-full bg-transparent border-2 ${errors.phone ? 'border-error' : 'border-fg'} px-4 py-3 font-mono focus:outline-none focus:border-gold transition-colors`}
                   placeholder="0555 XX XX XX"
                   dir="ltr"
@@ -212,71 +212,21 @@ const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
                 </label>
                 <select
                   value={formData.wilayaCode}
-                  onChange={(e) => setFormData({...formData, wilayaCode: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, wilayaCode: e.target.value })}
                   className={`w-full bg-bg border-2 ${errors.wilaya ? 'border-error' : 'border-fg'} px-4 py-3 font-mono focus:outline-none focus:border-gold transition-colors appearance-none cursor-pointer`}
                 >
                   <option value="">{isAr ? '-- اختر الولاية --' : '-- Sélectionner --'}</option>
-                  {SHIPPING_RATES.sort((a, b) => a.name.localeCompare(b.name)).map(rate => (
-                    <option key={rate.code} value={rate.code}>
-                      {rate.code} - {isAr ? rate.arName : rate.name} ({rate.homeDelivery} DA)
-                    </option>
-                  ))}
+                  {WILAYAS.sort((a, b) => a.name.localeCompare(b.name)).map(wilaya => {
+                    const price = getShippingPrice(wilaya.code);
+                    return (
+                      <option key={wilaya.code} value={wilaya.code}>
+                        {wilaya.code} - {isAr ? wilaya.arName : wilaya.name} ({price} DA)
+                      </option>
+                    );
+                  })}
                 </select>
                 {errors.wilaya && <p className="text-error text-xs mt-1 font-mono">{errors.wilaya}</p>}
               </div>
-
-              {/* Type de livraison */}
-              {selectedWilaya && (
-                <div>
-                  <label className="block font-mono text-xs uppercase tracking-wider mb-3">
-                    <Truck size={14} className="inline mr-2" />
-                    {isAr ? 'نوع التوصيل' : 'Mode de livraison'}
-                  </label>
-                  <div className="grid grid-cols-2 gap-4">
-                    <button
-                      type="button"
-                      onClick={() => setFormData({...formData, deliveryType: 'home'})}
-                      className={`p-4 border-2 transition-colors ${
-                        formData.deliveryType === 'home' 
-                          ? 'border-gold bg-gold/10' 
-                          : 'border-fg hover:border-gold'
-                      }`}
-                    >
-                      <Truck size={24} className="mx-auto mb-2" />
-                      <p className="font-bold text-sm">{isAr ? 'للمنزل' : 'À domicile'}</p>
-                      <p className="font-mono text-xs mt-1">
-                        {isFreeShipping ? (
-                          <span className="text-success">{isAr ? 'مجاني' : 'GRATUIT'}</span>
-                        ) : (
-                          `${selectedWilaya.homeDelivery} DA`
-                        )}
-                      </p>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setFormData({...formData, deliveryType: 'pickup'})}
-                      className={`p-4 border-2 transition-colors ${
-                        formData.deliveryType === 'pickup' 
-                          ? 'border-gold bg-gold/10' 
-                          : 'border-fg hover:border-gold'
-                      }`}
-                    >
-                      <Package size={24} className="mx-auto mb-2" />
-                      <p className="font-bold text-sm">{isAr ? 'نقطة استلام' : 'Point relais'}</p>
-                      <p className="font-mono text-xs mt-1">
-                        {isFreeShipping ? (
-                          <span className="text-success">{isAr ? 'مجاني' : 'GRATUIT'}</span>
-                        ) : (
-                          `${selectedWilaya.pickupPoint} DA`
-                        )}
-                      </p>
-                    </button>
-                  </div>
-                  <p className="text-xs font-mono mt-2 opacity-50">
-                    {isAr ? `مدة التوصيل: ${selectedWilaya.estimatedDays}` : `Délai: ${selectedWilaya.estimatedDays}`}
-                  </p>
-                </div>
-              )}
 
               {/* Adresse */}
               <div>
@@ -285,7 +235,7 @@ const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
                 </label>
                 <textarea
                   value={formData.address}
-                  onChange={(e) => setFormData({...formData, address: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                   rows={3}
                   className={`w-full bg-transparent border-2 ${errors.address ? 'border-error' : 'border-fg'} px-4 py-3 font-mono focus:outline-none focus:border-gold transition-colors resize-none`}
                   placeholder={isAr ? 'العنوان الكامل (الحي, الشارع, رقم البناية...)' : 'Adresse complète (quartier, rue, n° bâtiment...)'}
@@ -301,7 +251,7 @@ const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
                 <input
                   type="text"
                   value={formData.notes}
-                  onChange={(e) => setFormData({...formData, notes: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                   className="w-full bg-transparent border-2 border-fg/50 px-4 py-3 font-mono focus:outline-none focus:border-gold transition-colors"
                   placeholder={isAr ? 'تعليمات خاصة للتوصيل...' : 'Instructions spéciales...'}
                 />
@@ -320,7 +270,7 @@ const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
                 disabled={isSubmitting}
                 className="w-full bg-fg text-bg py-5 text-lg font-bold uppercase tracking-wider hover:bg-gold hover:text-fg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSubmitting 
+                {isSubmitting
                   ? (isAr ? 'جاري المعالجة...' : 'Traitement...')
                   : `${t.confirmOrder} - ${total.toLocaleString()} DA`
                 }
@@ -332,12 +282,12 @@ const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
           <div>
             <div className="bg-fg/5 border-2 border-fg p-6 sticky top-24">
               <h3 className="text-xl font-display font-bold mb-6 uppercase">{t.orderSummary}</h3>
-              
+
               <div className="space-y-4 mb-6">
                 {items.map(item => (
                   <div key={item.product.id} className="flex gap-4">
-                    <img 
-                      src={item.product.image} 
+                    <img
+                      src={item.product.image}
                       alt={item.product.name}
                       className="w-16 h-16 object-cover bg-concrete"
                     />
@@ -358,9 +308,9 @@ const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
                 <div className="flex justify-between font-mono text-sm">
                   <span>{t.shipping}</span>
                   <span className={shippingCost === 0 && subtotal > 0 ? 'text-success font-bold' : ''}>
-                    {shippingCost === 0 && subtotal >= FREE_SHIPPING_THRESHOLD 
+                    {shippingCost === 0 && subtotal >= FREE_SHIPPING_THRESHOLD
                       ? (isAr ? 'مجاني' : 'GRATUIT')
-                      : shippingCost > 0 
+                      : shippingCost > 0
                         ? `${shippingCost.toLocaleString()} DA`
                         : '--'
                     }
@@ -368,7 +318,7 @@ const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
                 </div>
                 {subtotal < FREE_SHIPPING_THRESHOLD && subtotal > 0 && (
                   <p className="text-xs text-gold font-mono">
-                    🚚 {isAr 
+                    🚚 {isAr
                       ? `أضف ${(FREE_SHIPPING_THRESHOLD - subtotal).toLocaleString()} DA للشحن المجاني`
                       : `Ajoutez ${(FREE_SHIPPING_THRESHOLD - subtotal).toLocaleString()} DA pour la livraison gratuite`
                     }

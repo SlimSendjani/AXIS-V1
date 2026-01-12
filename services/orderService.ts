@@ -8,7 +8,7 @@ export interface OrderData {
   wilayaName: string;
   address: string;
   deliveryType: 'home' | 'pickup';
-  
+
   // Infos commande
   items: {
     productId: string;
@@ -16,20 +16,20 @@ export interface OrderData {
     price: number;
     quantity: number;
   }[];
-  
+
   // Totaux
   subtotal: number;
   shippingCost: number;
   total: number;
-  
+
   // Meta
   orderDate: string;
   orderNumber: string;
   notes?: string;
 }
 
-// URL de votre Google Apps Script Web App (à remplacer après configuration)
-const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_SCRIPT_URL_HERE';
+// URL de votre Google Apps Script Web App
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrof2oVaXaRMQ7zB5P2b_kTg2BtBTuJVgzCOdXOrqRROXsUnfNKhCMvppclukmKilGnA/exec';
 
 export const generateOrderNumber = (): string => {
   const timestamp = Date.now().toString(36).toUpperCase();
@@ -37,40 +37,60 @@ export const generateOrderNumber = (): string => {
   return `AX-${timestamp}-${random}`;
 };
 
+// Fonction pour envoyer avec retry logic
+const sendWithRetry = async (url: string, data: any, maxRetries = 3): Promise<Response> => {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        mode: 'no-cors', // Important pour Google Apps Script
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      return response;
+    } catch (error) {
+      console.warn(`Attempt ${attempt} failed:`, error);
+      if (attempt === maxRetries) throw error;
+      // Attendre avant de réessayer (backoff exponentiel)
+      await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+    }
+  }
+  throw new Error('Max retries reached');
+};
+
 export const submitOrder = async (orderData: OrderData): Promise<{ success: boolean; message: string }> => {
   try {
-    // Si l'URL n'est pas configurée, on simule une soumission réussie
-    if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
-      console.log('Order data (Google Sheets not configured):', orderData);
-      // Stocker localement en attendant
-      const orders = JSON.parse(localStorage.getItem('axis-pending-orders') || '[]');
-      orders.push(orderData);
-      localStorage.setItem('axis-pending-orders', JSON.stringify(orders));
-      return { 
-        success: true, 
-        message: 'Commande enregistrée localement (configurez Google Sheets pour la synchronisation)' 
-      };
-    }
+    console.log('📤 Envoi de la commande à Google Sheets...', orderData);
 
-    const response = await fetch(GOOGLE_SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(orderData),
-    });
+    // Envoyer à Google Apps Script
+    await sendWithRetry(GOOGLE_SCRIPT_URL, orderData);
 
-    return { success: true, message: 'Commande envoyée avec succès!' };
+    // Sauvegarder localement comme backup
+    const orders = JSON.parse(localStorage.getItem('axis-orders-backup') || '[]');
+    orders.push({ ...orderData, syncedAt: new Date().toISOString() });
+    localStorage.setItem('axis-orders-backup', JSON.stringify(orders));
+
+    console.log('✅ Commande envoyée avec succès!');
+
+    return {
+      success: true,
+      message: 'Commande envoyée avec succès!'
+    };
   } catch (error) {
-    console.error('Error submitting order:', error);
+    console.error('❌ Erreur lors de l\'envoi:', error);
+
     // Sauvegarder localement en cas d'erreur
-    const orders = JSON.parse(localStorage.getItem('axis-pending-orders') || '[]');
-    orders.push(orderData);
-    localStorage.setItem('axis-pending-orders', JSON.stringify(orders));
-    return { 
-      success: true, 
-      message: 'Commande sauvegardée (sera synchronisée automatiquement)' 
+    const pendingOrders = JSON.parse(localStorage.getItem('axis-pending-orders') || '[]');
+    pendingOrders.push({ ...orderData, failedAt: new Date().toISOString() });
+    localStorage.setItem('axis-pending-orders', JSON.stringify(pendingOrders));
+
+    // On retourne success=true quand même car la commande est sauvegardée
+    return {
+      success: true,
+      message: 'Commande enregistrée (synchronisation en cours...)'
     };
   }
 };
@@ -78,8 +98,8 @@ export const submitOrder = async (orderData: OrderData): Promise<{ success: bool
 // Générer le message WhatsApp pour la commande
 export const generateWhatsAppMessage = (orderData: OrderData, lang: 'fr' | 'ar' | 'en'): string => {
   const isAr = lang === 'ar';
-  
-  const itemsList = orderData.items.map(item => 
+
+  const itemsList = orderData.items.map(item =>
     `• ${item.productName} x${item.quantity} = ${(item.price * item.quantity).toLocaleString()} DA`
   ).join('\n');
 

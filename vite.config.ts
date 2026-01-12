@@ -4,7 +4,7 @@ import { resolve } from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/AXIS-V1/',
+  // base removed for local dev simplicity
   publicDir: 'public',
   build: {
     outDir: 'dist',

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 import { Translation, Product } from '../types';
-import Cart from '../components/Cart';
+import { useCart } from '../contexts/CartContext';
+
 
 interface HomeProps {
   t: Translation;
@@ -10,14 +11,8 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({ t, products }) => {
-  const [cart, setCart] = useState<{ [key: string]: number }>({});
+  const { addToCart } = useCart();
 
-  const addToCart = (productId: string) => {
-    setCart(prev => ({
-      ...prev,
-      [productId]: (prev[productId] || 0) + 1
-    }));
-  };
 
   return (
     <>
@@ -105,7 +100,7 @@ const Home: React.FC<HomeProps> = ({ t, products }) => {
                 <button
                   onClick={(e) => {
                     e.preventDefault();
-                    addToCart(product.id);
+                    addToCart(product);
                   }}
                   className="w-full border-2 border-fg py-3 font-bold uppercase text-sm hover:bg-fg hover:text-bg transition-colors"
                 >
@@ -196,9 +191,6 @@ const Home: React.FC<HomeProps> = ({ t, products }) => {
           </button>
         </div>
       </section>
-
-      {/* Cart Component */}
-      <Cart t={t} lang="fr" products={products} />
     </>
   );
 };

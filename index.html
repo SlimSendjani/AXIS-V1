@@ -1,109 +1,117 @@
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>AXIS // DOMINANCE</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Inter:wght@400;500;600;800&family=Oswald:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'Cairo', 'sans-serif'],
-              display: ['Oswald', 'Cairo', 'sans-serif'],
-              mono: ['JetBrains Mono', 'monospace'],
-            },
-            colors: {
-              bg: '#FFFFFF',
-              fg: '#000000',
-              concrete: '#F3F3F3',
-              accent: '#000000',
-              gold: '#D4AF37',
-              error: '#D00000',
-              success: '#00AA00'
-            },
-            animation: {
-              'marquee': 'marquee 20s linear infinite',
-              'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-            },
-            keyframes: {
-              marquee: {
-                '0%': { transform: 'translateX(0%)' },
-                '100%': { transform: 'translateX(-100%)' },
-              }
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>AXIS // DOMINANCE</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Inter:wght@400;500;600;800&family=Oswald:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Cairo', 'sans-serif'],
+            display: ['Oswald', 'Cairo', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            bg: '#FFFFFF',
+            fg: '#000000',
+            concrete: '#F3F3F3',
+            accent: '#000000',
+            gold: '#D4AF37',
+            error: '#D00000',
+            success: '#00AA00'
+          },
+          animation: {
+            'marquee': 'marquee 20s linear infinite',
+            'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            marquee: {
+              '0%': { transform: 'translateX(0%)' },
+              '100%': { transform: 'translateX(-100%)' },
             }
           }
         }
       }
-    </script>
-    <style>
-      :root {
-        --bg-color: #FFFFFF;
-        --text-color: #000000;
-      }
-      body {
-        font-family: 'Inter', 'Cairo', sans-serif;
-        background-color: var(--bg-color);
-        color: var(--text-color);
-        overflow-x: hidden;
-      }
-      
-      .border-axis {
-        border: 2px solid #000000;
-      }
-      
-      .btn-axis {
-        background: #000000;
-        color: #FFFFFF;
-        text-transform: uppercase;
-        font-family: 'Oswald', 'Cairo', 'sans-serif';
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        transition: all 0.2s ease;
-      }
-      .btn-axis:hover {
-        background: #FFFFFF;
-        color: #000000;
-        border: 2px solid #000000;
-      }
+    }
+  </script>
+  <style>
+    :root {
+      --bg-color: #FFFFFF;
+      --text-color: #000000;
+    }
 
-      .no-scrollbar::-webkit-scrollbar {
-        display: none;
-      }
-      .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
-      
-      [dir="rtl"] .btn-axis {
-        letter-spacing: 0;
-      }
-      
-      /* Correction pour le checkout - inputs visibles */
-      input[type="text"],
-      input[type="tel"],
-      textarea,
-      select {
-        background-color: #FFFFFF !important;
-        color: #000000 !important;
-        border-color: #000000 !important;
-      }
-      
-      input[type="text"]:focus,
-      input[type="tel"]:focus,
-      textarea:focus,
-      select:focus {
-        border-color: #D4AF37 !important;
-        box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1) !important;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
-  </body>
+    body {
+      font-family: 'Inter', 'Cairo', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      overflow-x: hidden;
+    }
+
+    .border-axis {
+      border: 2px solid #000000;
+    }
+
+    .btn-axis {
+      background: #000000;
+      color: #FFFFFF;
+      text-transform: uppercase;
+      font-family: 'Oswald', 'Cairo', 'sans-serif';
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      transition: all 0.2s ease;
+    }
+
+    .btn-axis:hover {
+      background: #FFFFFF;
+      color: #000000;
+      border: 2px solid #000000;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    [dir="rtl"] .btn-axis {
+      letter-spacing: 0;
+    }
+
+    /* Correction pour le checkout - inputs visibles */
+    input[type="text"],
+    input[type="tel"],
+    textarea,
+    select {
+      background-color: #FFFFFF !important;
+      color: #000000 !important;
+      border-color: #000000 !important;
+    }
+
+    input[type="text"]:focus,
+    input[type="tel"]:focus,
+    textarea:focus,
+    select:focus {
+      border-color: #D4AF37 !important;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1) !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
 </html>

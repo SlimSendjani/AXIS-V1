@@ -80,6 +80,7 @@ export interface Translation {
   orderPlaced: string;
   orderConfirmEmail: string;
   trackingInfo: string;
+  syncingOrder: string;
 }
 
 export interface Product {
