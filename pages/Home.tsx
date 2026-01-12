@@ -25,7 +25,10 @@ const Home: React.FC<HomeProps> = ({ t, products }) => {
           <p className="text-lg md:text-xl max-w-2xl mb-8 leading-relaxed opacity-90">
             {t.heroSubtitle}
           </p>
-          <button className="inline-flex items-center gap-3 bg-fg text-bg px-8 py-4 font-bold uppercase text-sm tracking-widest hover:scale-105 transition-transform">
+          <button
+            onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
+            className="inline-flex items-center gap-3 bg-fg text-bg px-8 py-4 font-bold uppercase text-sm tracking-widest hover:scale-105 transition-transform"
+          >
             {t.heroCta}
             <ArrowRight size={20} />
           </button>
@@ -71,7 +74,7 @@ const Home: React.FC<HomeProps> = ({ t, products }) => {
       </section>
 
       {/* Products */}
-      <section className="py-20 px-6 bg-bg/50">
+      <section id="products" className="py-20 px-6 bg-bg/50">
         <div className="container mx-auto max-w-6xl">
           <div className="mb-16">
             <h2 className="text-6xl md:text-8xl font-display tracking-tighter mb-3">{t.productsTitle}</h2>
