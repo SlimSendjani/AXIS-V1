@@ -3,23 +3,23 @@ import { Product, Wilaya, Translation, Language } from './types';
 export const BRAND_NAME = "AXIS";
 export const PHONE_NUMBER_WHATSAPP = "213555123456"; 
 
-// Images produits réelles - E-commerce optimisées
+// Images produits - URLs Pexels/Unsplash fiables
 const PRODUCT_IMGS = {
-  // Gaine amincissante body shaper
-  shapewear: "https://ae01.alicdn.com/kf/S02b4e43dfe3d4d76b65cce6fcc1f6c94G/Women-Shapewear-Bodysuit-Tummy-Control-Body-Shaper-Fajas-Colombianas-Waist-Trainer-Butt-Lifter-Thigh-Slimmer-Full.jpg",
-  shapewear2: "https://ae01.alicdn.com/kf/S90ac95e97e5c4c2da74ea26c3ffb53dba/Fajas-Colombianas-Post-Surgery-Compression-Garment-Shapewear-Bodysuit-Women-Body-Shaper-Slimming-Underwear-Tummy-Control-Waist.jpg",
+  // Gaine amincissante
+  shapewear: "https://images.pexels.com/photos/6311652/pexels-photo-6311652.jpeg?auto=compress&cs=tinysrgb&w=600",
+  shapewear2: "https://images.pexels.com/photos/6311387/pexels-photo-6311387.jpeg?auto=compress&cs=tinysrgb&w=600",
   
   // Correcteur de posture
-  posture: "https://ae01.alicdn.com/kf/S4d3b8a9d84a84c0d95aab8f54fc9e3c2N/Posture-Corrector-Back-Shoulder-Support-Brace-Belt-Therapy-Adjustable-Posture-Back-Brace-Belt-Clavicle-Spine-Back.jpg",
-  posture2: "https://ae01.alicdn.com/kf/S31c2e28c9b8b4e98a9f6a22f6ca68a9aD/Back-Posture-Corrector-Therapy-Corset-Spine-Support-Belt-Lumbar-Back-Posture-Correction-Bandage-For-Men-Women.jpg",
+  posture: "https://images.pexels.com/photos/4498151/pexels-photo-4498151.jpeg?auto=compress&cs=tinysrgb&w=600",
+  posture2: "https://images.pexels.com/photos/4498155/pexels-photo-4498155.jpeg?auto=compress&cs=tinysrgb&w=600",
   
   // Genouillère premium
-  knee: "https://ae01.alicdn.com/kf/S9e0f9b6d1e6f4d8f8b0c6e9a2d5b3c7aW/1-Pair-Knee-Brace-Support-Compression-Sleeves-Wraps-Pads-for-Arthritis-Running-Pain-Relief-Injury-Recovery.jpg",
-  knee2: "https://ae01.alicdn.com/kf/Sc2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7H/Professional-Knee-Brace-Compression-Support-with-Side-Stabilizers-Adjustable-Straps-for-Meniscus-Tear-Arthritis-ACL-MCL.jpg",
+  knee: "https://images.pexels.com/photos/4498606/pexels-photo-4498606.jpeg?auto=compress&cs=tinysrgb&w=600",
+  knee2: "https://images.pexels.com/photos/6111616/pexels-photo-6111616.jpeg?auto=compress&cs=tinysrgb&w=600",
   
-  // Semelles orthopédiques fasciite plantaire
-  insoles: "https://ae01.alicdn.com/kf/S8a2f5c7d9e4b6a8c0d2e4f6a8b0c2d4eN/Premium-Orthopedic-Insoles-Arch-Support-Flat-Feet-Plantar-Fasciitis-Pain-Relief-Memory-Foam-Shoe-Inserts-for.jpg",
-  insoles2: "https://ae01.alicdn.com/kf/Sb4c6d8e0a2f4c6e8a0b2d4f6a8c0e2d4F/Orthopedic-Insoles-3D-Flatfoot-Flat-Foot-Orthotic-Arch-Support-Insoles-High-Arch-Shoe-Pad-Insole-Accessories.jpg"
+  // Semelles orthopédiques
+  insoles: "https://images.pexels.com/photos/1456705/pexels-photo-1456705.jpeg?auto=compress&cs=tinysrgb&w=600",
+  insoles2: "https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&w=600"
 };
 
 export const TRANSLATIONS: Record<Language, Translation> = {
@@ -311,7 +311,7 @@ export const getProducts = (lang: Language): Product[] => {
     {
       id: "insoles",
       name: "PLANTAR RELIEF",
-      tagline: isAr ? "سمال للتهاب اللفافة الأخمصية" : "SEMELLES FASCIITE PLANTAIRE",
+      tagline: isAr ? "سمال لالتهاب اللفافة الأخمصية" : "SEMELLES FASCIITE PLANTAIRE",
       price: 2500,
       oldPrice: 3800,
       shortDesc: isAr ? "وداعاً لآلام القدم. امشِ براحة تامة." : "Adieu les douleurs plantaires. Marchez avec un confort total.",

@@ -18,7 +18,8 @@ function ScrollToTop() {
 }
 
 function App() {
-  const [lang, setLang] = useState<Language>('fr');
+  // Langue arabe par défaut
+  const [lang, setLang] = useState<Language>('ar');
   const [loading, setLoading] = useState(true);
 
   const t = TRANSLATIONS[lang];
@@ -35,10 +36,9 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  const toggleLang = () => {
-    if (lang === 'fr') setLang('ar');
-    else if (lang === 'ar') setLang('en');
-    else setLang('fr');
+  // Fonction pour changer la langue
+  const changeLang = (newLang: Language) => {
+    setLang(newLang);
   };
 
   if (loading) {
@@ -56,17 +56,16 @@ function App() {
       <SalesNotification />
       <Routes>
         <Route path="/" element={
-          <Layout t={t} lang={lang} toggleLang={toggleLang}>
+          <Layout t={t} lang={lang} changeLang={changeLang}>
             <Home t={t} products={products} />
           </Layout>
         } />
         <Route path="/product/:id" element={
-          <Layout t={t} lang={lang} toggleLang={toggleLang}>
+          <Layout t={t} lang={lang} changeLang={changeLang}>
             <ProductDetail t={t} products={products} />
           </Layout>
         } />
         <Route path="/checkout" element={
-          // Checkout has its own specific layout inside, usually cleaner
           <Checkout t={t} products={products} lang={lang} />
         } />
       </Routes>

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Globe, ShoppingBag } from 'lucide-react';
+import { Globe, ShoppingBag, ChevronDown } from 'lucide-react';
 import { BRAND_NAME } from '../constants';
 import { Translation, Language } from '../types';
 
@@ -8,10 +8,32 @@ interface LayoutProps {
   children: React.ReactNode;
   t: Translation;
   lang: Language;
-  toggleLang: () => void;
+  changeLang: (lang: Language) => void;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children, t, lang, toggleLang }) => {
+const LANGUAGES: { code: Language; label: string; flag: string }[] = [
+  { code: 'ar', label: 'العربية', flag: '🇩🇿' },
+  { code: 'fr', label: 'Français', flag: '🇫🇷' },
+  { code: 'en', label: 'English', flag: '🇬🇧' },
+];
+
+const Layout: React.FC<LayoutProps> = ({ children, t, lang, changeLang }) => {
+  const [isLangOpen, setIsLangOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Fermer le dropdown quand on clique ailleurs
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsLangOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const currentLang = LANGUAGES.find(l => l.code === lang);
+
   return (
     <div className={`min-h-screen bg-bg text-fg ${lang === 'ar' ? 'font-sans' : ''} flex flex-col`}>
       {/* Brutalist Ticker */}
@@ -34,12 +56,39 @@ const Layout: React.FC<LayoutProps> = ({ children, t, lang, toggleLang }) => {
 
           <div className="flex items-center gap-6">
             <Link to="/" className="hidden md:block text-xs font-bold uppercase tracking-widest hover:underline decoration-2 underline-offset-4">{t.navShop}</Link>
-            <button 
-              onClick={toggleLang}
-              className="text-xs font-mono font-bold uppercase border border-fg px-2 py-1 hover:bg-fg hover:text-bg transition-colors"
-            >
-              {lang}
-            </button>
+            
+            {/* Menu déroulant des langues */}
+            <div className="relative" ref={dropdownRef}>
+              <button 
+                onClick={() => setIsLangOpen(!isLangOpen)}
+                className="flex items-center gap-2 text-xs font-mono font-bold uppercase border border-fg px-3 py-2 hover:bg-fg hover:text-bg transition-colors"
+              >
+                <span>{currentLang?.flag}</span>
+                <span className="hidden sm:inline">{currentLang?.label}</span>
+                <ChevronDown size={14} className={`transition-transform ${isLangOpen ? 'rotate-180' : ''}`} />
+              </button>
+              
+              {isLangOpen && (
+                <div className="absolute top-full mt-1 right-0 bg-bg border-2 border-fg shadow-lg min-w-[140px] z-50">
+                  {LANGUAGES.map((language) => (
+                    <button
+                      key={language.code}
+                      onClick={() => {
+                        changeLang(language.code);
+                        setIsLangOpen(false);
+                      }}
+                      className={`w-full flex items-center gap-2 px-4 py-3 text-xs font-bold uppercase hover:bg-fg hover:text-bg transition-colors ${
+                        lang === language.code ? 'bg-fg text-bg' : ''
+                      }`}
+                    >
+                      <span>{language.flag}</span>
+                      <span>{language.label}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <div className="relative cursor-pointer">
               <ShoppingBag size={20} strokeWidth={2} />
               <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-fg text-bg text-[8px] flex items-center justify-center font-bold rounded-full">0</span>
@@ -59,19 +108,19 @@ const Layout: React.FC<LayoutProps> = ({ children, t, lang, toggleLang }) => {
              <div>
                 <h2 className="text-6xl md:text-9xl font-display leading-none tracking-tighter mb-4">{BRAND_NAME}</h2>
                 <p className="font-mono text-xs max-w-sm uppercase opacity-70">
-                  Performance equipment for the modern human structure.
+                  {lang === 'ar' ? 'معدات الأداء للهيكل البشري الحديث.' : 'Performance equipment for the modern human structure.'}
                 </p>
              </div>
              <div className="flex flex-col justify-end md:items-end gap-4">
                 <a href="#" className="text-xl font-bold uppercase hover:text-concrete transition-colors">Instagram</a>
-                <a href="#" className="text-xl font-bold uppercase hover:text-concrete transition-colors">Support</a>
-                <a href="#" className="text-xl font-bold uppercase hover:text-concrete transition-colors">Legal</a>
+                <a href="#" className="text-xl font-bold uppercase hover:text-concrete transition-colors">{lang === 'ar' ? 'الدعم' : 'Support'}</a>
+                <a href="#" className="text-xl font-bold uppercase hover:text-concrete transition-colors">{lang === 'ar' ? 'قانوني' : 'Legal'}</a>
              </div>
           </div>
           
           <div className="border-t border-bg/20 pt-8 flex flex-col md:flex-row justify-between items-center font-mono text-[10px] uppercase">
-            <p>AXIS CORP © 2026. ALGIERS HQ.</p>
-            <p>SYSTEM STATUS: ONLINE</p>
+            <p>AXIS CORP © 2026. {lang === 'ar' ? 'الجزائر' : 'ALGIERS HQ'}.</p>
+            <p>{lang === 'ar' ? 'حالة النظام: متصل' : 'SYSTEM STATUS: ONLINE'}</p>
           </div>
         </div>
       </footer>
