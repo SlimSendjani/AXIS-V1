@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingBag, X, Send } from 'lucide-react';
+import { ShoppingBag, X, Send, Loader } from 'lucide-react';
 import { Translation, Language, CartItem, Order } from '../types';
 import { WILAYAS, getShippingPrice, ADMIN_EMAIL } from '../constants';
+import { syncOrderComplete } from '../utils/googleSheetsSync';
 
 interface CartProps {
   t: Translation;
@@ -14,6 +15,7 @@ const Cart: React.FC<CartProps> = ({ t, lang, products }) => {
   const [showCart, setShowCart] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
   const [selectedWilaya, setSelectedWilaya] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -22,13 +24,11 @@ const Cart: React.FC<CartProps> = ({ t, lang, products }) => {
   });
   const [orderPlaced, setOrderPlaced] = useState(false);
 
-  // Charger le panier depuis localStorage
   useEffect(() => {
     const saved = localStorage.getItem('axis_cart');
     if (saved) setCartItems(JSON.parse(saved));
   }, []);
 
-  // Sauvegarder le panier
   const saveCart = (items: CartItem[]) => {
     setCartItems(items);
     localStorage.setItem('axis_cart', JSON.stringify(items));
@@ -78,9 +78,11 @@ const Cart: React.FC<CartProps> = ({ t, lang, products }) => {
 
   const handleCheckout = async () => {
     if (!formData.name || !formData.email || !formData.phone || !selectedWilaya || !formData.address) {
-      alert('Veuillez remplir tous les champs');
+      alert(lang === 'ar' ? 'يرجى ملء جميع الحقول' : 'Veuillez remplir tous les champs');
       return;
     }
+
+    setIsSubmitting(true);
 
     const order: Order = {
       id: `AXIS-${Date.now()}`,
@@ -99,49 +101,12 @@ const Cart: React.FC<CartProps> = ({ t, lang, products }) => {
       status: 'pending'
     };
 
-    // Envoyer l'email via Formspree
     try {
-      const emailContent = `
-        📋 NOUVELLE COMMANDE AXIS
-        ═══════════════════════════════════
-        
-        🔔 COMMANDE #${order.id}
-        Heure: ${new Date(order.timestamp).toLocaleString(lang === 'ar' ? 'ar-DZ' : 'fr-FR')}
-        
-        👤 CLIENT
-        Nom: ${order.customer.name}
-        Email: ${order.customer.email}
-        Téléphone: ${order.customer.phone}
-        Wilaya: ${order.customer.wilaya}
-        Adresse: ${order.customer.address}
-        
-        📦 PRODUITS
-        ${order.items.map(item => `- ${item.productName} x${item.quantity} = ${item.price * item.quantity} DA`).join('\n')}
-        
-        💰 RÉSUMÉ
-        Sous-total: ${order.subtotal} DA
-        Livraison: ${order.shippingCost} DA
-        TOTAL: ${order.total} DA
-        
-        ✅ Statut: PENDING
-        Paiement à la livraison
-        
-        📞 À faire: Contacter le client dans les 24h
-      `;
+      // Synchroniser la commande (email + Google Sheets)
+      const synced = await syncOrderComplete(order, selectedWilaya);
 
-      // Utiliser Formspree pour envoyer l'email
-      const response = await fetch('https://formspree.io/f/mqzeeaqk', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: ADMIN_EMAIL,
-          subject: `[AXIS] Nouvelle commande #${order.id}`,
-          message: emailContent
-        })
-      });
-
-      if (response.ok) {
-        // Sauvegarder la commande
+      if (synced) {
+        // Sauvegarder localement
         const orders = JSON.parse(localStorage.getItem('axis_orders') || '[]');
         orders.push(order);
         localStorage.setItem('axis_orders', JSON.stringify(orders));
@@ -155,10 +120,14 @@ const Cart: React.FC<CartProps> = ({ t, lang, products }) => {
           setFormData({ name: '', email: '', phone: '', address: '' });
           setSelectedWilaya('');
         }, 5000);
+      } else {
+        alert(lang === 'ar' ? 'خطأ في المزامنة. يرجى المحاولة مرة أخرى.' : 'Erreur lors de la synchronisation. Veuillez réessayer.');
       }
     } catch (error) {
-      console.error('Erreur lors de l\'envoi:', error);
-      alert('Erreur lors de la commande. Veuillez réessayer.');
+      console.error('Erreur:', error);
+      alert(lang === 'ar' ? 'خطأ في الطلب' : 'Erreur lors de la commande');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -253,26 +222,30 @@ const Cart: React.FC<CartProps> = ({ t, lang, products }) => {
                     placeholder={t.identity}
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-3 py-2 border border-fg rounded text-sm"
+                    disabled={isSubmitting}
+                    className="w-full px-3 py-2 border border-fg rounded text-sm disabled:opacity-50"
                   />
                   <input
                     type="email"
                     placeholder="Email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-3 py-2 border border-fg rounded text-sm"
+                    disabled={isSubmitting}
+                    className="w-full px-3 py-2 border border-fg rounded text-sm disabled:opacity-50"
                   />
                   <input
                     type="tel"
                     placeholder={t.contact}
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-3 py-2 border border-fg rounded text-sm"
+                    disabled={isSubmitting}
+                    className="w-full px-3 py-2 border border-fg rounded text-sm disabled:opacity-50"
                   />
                   <select
                     value={selectedWilaya}
                     onChange={(e) => setSelectedWilaya(e.target.value)}
-                    className="w-full px-3 py-2 border border-fg rounded text-sm"
+                    disabled={isSubmitting}
+                    className="w-full px-3 py-2 border border-fg rounded text-sm disabled:opacity-50"
                   >
                     <option value="">{t.zone}</option>
                     {WILAYAS.map(wilaya => (
@@ -285,7 +258,8 @@ const Cart: React.FC<CartProps> = ({ t, lang, products }) => {
                     placeholder={t.sector}
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                    className="w-full px-3 py-2 border border-fg rounded text-sm h-20"
+                    disabled={isSubmitting}
+                    className="w-full px-3 py-2 border border-fg rounded text-sm h-20 disabled:opacity-50"
                   />
                 </div>
 
@@ -307,16 +281,27 @@ const Cart: React.FC<CartProps> = ({ t, lang, products }) => {
                 <div className="flex gap-2">
                   <button
                     onClick={() => setShowCheckout(false)}
-                    className="flex-1 border-2 border-fg py-2 font-bold uppercase text-sm hover:bg-fg hover:text-bg transition-colors"
+                    disabled={isSubmitting}
+                    className="flex-1 border-2 border-fg py-2 font-bold uppercase text-sm hover:bg-fg hover:text-bg transition-colors disabled:opacity-50"
                   >
                     {t.back}
                   </button>
                   <button
                     onClick={handleCheckout}
-                    className="flex-1 bg-fg text-bg py-2 font-bold uppercase text-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                    disabled={isSubmitting}
+                    className="flex-1 bg-fg text-bg py-2 font-bold uppercase text-sm hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
                   >
-                    <Send size={16} />
-                    {t.confirmOrder}
+                    {isSubmitting ? (
+                      <>
+                        <Loader size={16} className="animate-spin" />
+                        {t.syncingOrder}
+                      </>
+                    ) : (
+                      <>
+                        <Send size={16} />
+                        {t.confirmOrder}
+                      </>
+                    )}
                   </button>
                 </div>
               </>

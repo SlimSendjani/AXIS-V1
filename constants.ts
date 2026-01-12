@@ -3,7 +3,17 @@ import { Product, Wilaya, Translation, Language } from './types';
 export const BRAND_NAME = "AXIS";
 export const PHONE_NUMBER_WHATSAPP = "213555123456";
 export const ADMIN_EMAIL = "slim.sendjani@gmail.com";
-export const FORMSPREE_ID = "mqzeeaqk"; // Formspree pour recevoir les emails
+
+// Google Sheets Configuration
+export const GOOGLE_SHEETS_CONFIG = {
+  spreadsheetId: "1h3i6DMdTGhBXHNDbekCFBKZ4xMOT8KbqgGI3ghPWg4g",
+  sheetName: "Commandes",
+  // API Key (public) - remplacer si nécessaire
+  apiKey: "AIzaSyBDjIe60p8mnxtutJzHhayrQ9crViCSMts"
+};
+
+// Formspree Configuration
+export const FORMSPREE_ID = "mqzeeaqk";
 
 // Images produits depuis le repo GitHub - URLs raw
 const REPO_BASE = "https://raw.githubusercontent.com/SlimSendjani/AXIS-V1/main";
@@ -20,19 +30,12 @@ const PRODUCT_IMGS = {
 };
 
 // Frais de livraison intelligents par zone (en DA)
-// Zone 1 (Alger + proches): 500 DA
-// Zone 2 (Région Nord): 800 DA
-// Zone 3 (Région Centre): 1000 DA
-// Zone 4 (Région Est): 1200 DA
-// Zone 5 (Région Ouest): 1200 DA
-// Zone 6 (Région Sud): 1500 DA
-
 export const SHIPPING_ZONES = {
-  zone1: { name: "Alger & Proximité", price: 500, wilayas: ["16", "09", "35", "42"] }, // Alger, Blida, Boumerdès, Tipaza
-  zone2: { name: "Nord Algérie", price: 800, wilayas: ["01", "02", "15", "18", "21", "23", "24", "25", "36", "37", "38", "39", "40", "41", "43", "44", "51", "56", "57"] }, // Adrar, Chlef, Tizi Ouzou, Jijel, Skikda, Annaba, Guelma, Constantine, El Tarf, Tindouf, Tissemsilt, El Oued, Khenchela, Souk Ahras, Mila, Aïn Defla, Ouled Djellal, Djanet, El M'Ghair
-  zone3: { name: "Centre Algérie", price: 1000, wilayas: ["03", "05", "06", "07", "17", "19", "26", "27", "28", "29", "30", "47", "49", "50", "52", "53", "54", "55", "58"] }, // Laghouat, Batna, Béjaïa, Biskra, Djelfa, Sétif, Médéa, Mostaganem, M'Sila, Mascara, Ouargla, Ghardaïa, Timimoun, Bordj Badji Mokhtar, Béni Abbès, In Salah, In Guezzam, Touggourt, El Meniaa
-  zone4: { name: "Est Algérie", price: 1200, wilayas: ["04", "08", "12", "13", "14", "20", "22", "31", "32", "33", "45", "46", "48"] }, // Oum El Bouaghi, Béchar, Tébessa, Tlemcen, Tiaret, Saïda, Sidi Bel Abbès, Oran, El Bayadh, Illizi, Naâma, Aïn Témouchent, Relizane
-  zone5: { name: "Ouest Algérie", price: 1200, wilayas: ["10", "11", "34"] }, // Bouira, Tamanrasset, Bordj Bou Arreridj
+  zone1: { name: "Alger & Proximité", price: 500, wilayas: ["16", "09", "35", "42"] },
+  zone2: { name: "Nord Algérie", price: 800, wilayas: ["01", "02", "15", "18", "21", "23", "24", "25", "36", "37", "38", "39", "40", "41", "43", "44", "51", "56", "57"] },
+  zone3: { name: "Centre Algérie", price: 1000, wilayas: ["03", "05", "06", "07", "17", "19", "26", "27", "28", "29", "30", "47", "49", "50", "52", "53", "54", "55", "58"] },
+  zone4: { name: "Est Algérie", price: 1200, wilayas: ["04", "08", "12", "13", "14", "20", "22", "31", "32", "33", "45", "46", "48"] },
+  zone5: { name: "Ouest Algérie", price: 1200, wilayas: ["10", "11", "34"] },
 };
 
 export const getShippingPrice = (wilayaCode: string): number => {
@@ -41,7 +44,7 @@ export const getShippingPrice = (wilayaCode: string): number => {
       return zone.price;
     }
   }
-  return 1500; // Default: wilaya inconnue
+  return 1500;
 };
 
 export const getShippingZone = (wilayaCode: string): string => {
@@ -133,7 +136,8 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     proceedCheckout: "PROCÉDER AU PAIEMENT",
     orderPlaced: "COMMANDE CONFIRMÉE",
     orderConfirmEmail: "Un email de confirmation a été envoyé à",
-    trackingInfo: "Nous vous recontacterons sous 24h pour confirmer votre livraison"
+    trackingInfo: "Nous vous recontacterons sous 24h pour confirmer votre livraison",
+    syncingOrder: "Synchronisation avec Google Sheets..."
   },
   en: {
     navShop: "ARSENAL",
@@ -214,7 +218,8 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     proceedCheckout: "PROCEED TO CHECKOUT",
     orderPlaced: "ORDER CONFIRMED",
     orderConfirmEmail: "A confirmation email has been sent to",
-    trackingInfo: "We will contact you within 24h to confirm your delivery"
+    trackingInfo: "We will contact you within 24h to confirm your delivery",
+    syncingOrder: "Syncing with Google Sheets..."
   },
   ar: {
     navShop: "الترسانة",
@@ -295,7 +300,8 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     proceedCheckout: "المتابعة للدفع",
     orderPlaced: "تم تأكيد الطلب",
     orderConfirmEmail: "تم إرسال بريد تأكيد إلى",
-    trackingInfo: "سنتصل بك خلال 24 ساعة لتأكيد التسليم"
+    trackingInfo: "سنتصل بك خلال 24 ساعة لتأكيد التسليم",
+    syncingOrder: "جاري المزامنة مع Google Sheets..."
   }
 };
 
@@ -348,7 +354,7 @@ export const getProducts = (lang: Language): Product[] => {
     {
       id: "knee",
       name: "KINETIC GUARD",
-      tagline: isAr ? "جنويلير بريميوم" : "GENOUILLÈRE PREMIUM",
+      tagline: isAr ? "جنوييير برييوم" : "GENOUILLÈRE PREMIUM",
       price: 2900,
       oldPrice: 4200,
       shortDesc: isAr ? "حول ركبتك إلى حصن منيع." : "Transformez votre genou en forteresse.",
