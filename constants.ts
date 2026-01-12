@@ -3,12 +3,14 @@ import { Product, Wilaya, Translation, Language } from './types';
 export const BRAND_NAME = "AXIS";
 export const PHONE_NUMBER_WHATSAPP = "213555123456"; 
 
-const FALLBACK_IMGS = {
-  bodysuit: "https://images.unsplash.com/photo-1595341888016-a392ef81b7de?q=80&w=1000&auto=format&fit=crop", 
-  knee: "https://images.unsplash.com/photo-1552674605-5d28c475e6c6?q=80&w=1000&auto=format&fit=crop",
-  spine: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=1000&auto=format&fit=crop",
-  insoles: "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?q=80&w=1000&auto=format&fit=crop",
-  neck: "https://images.unsplash.com/photo-1579126038374-6064e9370f0f?q=80&w=1000&auto=format&fit=crop"
+// Images produits - Nouvelles photos professionnelles
+const PRODUCT_IMGS = {
+  bodysuit: "https://raw.githubusercontent.com/SlimSendjani/AXIS-V1/main/1e999d18-4d8d-4dc0-8b96-a8ec1e41df17.png",
+  bodysuitFlat: "https://raw.githubusercontent.com/SlimSendjani/AXIS-V1/main/3a16206c-2971-40da-9972-6bba3e835300.png",
+  knee: "https://raw.githubusercontent.com/SlimSendjani/AXIS-V1/main/aebef839-045c-41b6-be23-609edac91b3d.png",
+  spine: "https://raw.githubusercontent.com/SlimSendjani/AXIS-V1/main/91155762-e3ed-4cd3-967b-94d45382b4f6.png",
+  insoles: "https://raw.githubusercontent.com/SlimSendjani/AXIS-V1/main/86d18a90-aaab-4a27-90bf-01668154280b.png",
+  neck: "https://raw.githubusercontent.com/SlimSendjani/AXIS-V1/main/91155762-e3ed-4cd3-967b-94d45382b4f6.png"
 };
 
 export const TRANSLATIONS: Record<Language, Translation> = {
@@ -244,8 +246,8 @@ export const getProducts = (lang: Language): Product[] => {
       description: isAr 
         ? "درعك اليومي ضد الترهل. قماش ضاغط متطور يعمل كبشرة ثانية، يشد البطن، يرفع الصدر، وينحت الخصر في لحظة ارتدائه. ثقة مطلقة تحت أي ملابس."
         : "Votre armure quotidienne contre le relâchement. Textile compressif avancé agissant comme une seconde peau : gaine le ventre, remonte le buste et sculpte la taille dès l'enfilage. Confiance absolue sous n'importe quelle tenue.",
-      image: "bodysuit.jpg",
-      gallery: [FALLBACK_IMGS.bodysuit],
+      image: PRODUCT_IMGS.bodysuit,
+      gallery: [PRODUCT_IMGS.bodysuit, PRODUCT_IMGS.bodysuitFlat],
       features: [
         { title: isAr ? "شد فوري" : "INSTANT LIFT", desc: isAr ? "نتيجة مرئية في ثوان" : "Résultat visible en secondes." },
         { title: isAr ? "إخفاء تام" : "INVISIBLE", desc: isAr ? "لا يظهر تحت الملابس" : "Indétectable sous les vêtements." }
@@ -265,8 +267,8 @@ export const getProducts = (lang: Language): Product[] => {
       description: isAr 
         ? "الجهاز النهائي لمن يقضون ساعات أمام الشاشات. تقنية السحب الهوائي تباعد بين الفقرات بلطف، مما يزيل الضغط عن الأعصاب ويعيد تدفق الدم للرأس. وداعاً للصداع."
         : "L'outil ultime pour ceux qui vivent devant un écran. La traction pneumatique écarte doucement les vertèbres, libérant les nerfs comprimés et rétablissant le flux sanguin vers le cerveau. Adieu les migraines.",
-      image: "neck.jpg",
-      gallery: [FALLBACK_IMGS.neck],
+      image: PRODUCT_IMGS.spine,
+      gallery: [PRODUCT_IMGS.spine],
       features: [
         { title: isAr ? "سحب هوائي" : "TRACTION AIR", desc: isAr ? "تخفيف الضغط العصبي" : "Décompression nerveuse." },
         { title: isAr ? "راحة فورية" : "INSTANT RELIEF", desc: isAr ? "استرخاء عضلات الرقبة" : "Relâchement musculaire." }
@@ -286,8 +288,8 @@ export const getProducts = (lang: Language): Product[] => {
       description: isAr 
         ? "الألم يجعلك ضعيفاً. هذه الدعامة توفر ثباتاً ميكانيكياً وحرارياً للركبة، مما يسمح لك بالحركة، الجري، والعمل دون خوف من الإصابة أو الألم."
         : "La douleur vous affaiblit. Cette genouillère offre une stabilité mécanique et thermique, vous permettant de bouger, courir et travailler sans la peur de la blessure ou de la douleur.",
-      image: "genouillere.jpg",
-      gallery: [FALLBACK_IMGS.knee],
+      image: PRODUCT_IMGS.knee,
+      gallery: [PRODUCT_IMGS.knee],
       features: [
         { title: isAr ? "تثبيت كامل" : "LOCKDOWN", desc: isAr ? "أشرطة مانعة للانزلاق" : "Sangles anti-glisse." },
         { title: isAr ? "تنشيط حراري" : "THERMAL ACT", desc: isAr ? "تسريع الاستشفاء" : "Accélère la récupération." }
@@ -307,8 +309,8 @@ export const getProducts = (lang: Language): Product[] => {
       description: isAr 
         ? "لغة الجسد هي كل شيء. هذا الهيكل يجبر كتفيك على العودة للخلف وصدرك للأمام. يعيد برمجة عضلات ظهرك لتقف بشموخ وتتنفس بعمق. استعد هيبتك."
         : "Le langage corporel est tout. Ce rig force vos épaules vers l'arrière et votre torse vers l'avant. Il reprogramme vos muscles dorsaux pour vous tenir droit et respirer profondément. Réclamez votre espace.",
-      image: "correcteur.jpg",
-      gallery: [FALLBACK_IMGS.spine],
+      image: PRODUCT_IMGS.spine,
+      gallery: [PRODUCT_IMGS.spine],
       features: [
         { title: isAr ? "تصحيح المسار" : "CORRECTION", desc: isAr ? "استقامة فورية" : "Alignement immédiat." },
         { title: isAr ? "ذاكرة عضلية" : "MUSCLE MEMORY", desc: isAr ? "نتائج دائمة" : "Résultats permanents." }
@@ -328,8 +330,8 @@ export const getProducts = (lang: Language): Product[] => {
       description: isAr 
         ? "ترقية ضرورية لأي حذاء. طبقة الجل الهندسية تمتص صدمات الارتطام بالأرض، تحمي ركبتيك وعمودك الفقري من الاهتزازات. طاقة لا تنتهي طوال اليوم."
         : "Upgrade essentiel pour toute chaussure. La couche de gel ingénierie absorbe les chocs d'impact, protégeant vos genoux et votre colonne des vibrations. Une énergie inépuisable toute la journée.",
-      image: "semelles.jpg",
-      gallery: [FALLBACK_IMGS.insoles],
+      image: PRODUCT_IMGS.insoles,
+      gallery: [PRODUCT_IMGS.insoles],
       features: [
         { title: isAr ? "امتصاص الصدمات" : "SHOCK ABSORB", desc: isAr ? "حماية المفاصل" : "Protection articulaire." },
         { title: isAr ? "راحة قصوى" : "MAX COMFORT", desc: isAr ? "للاستخدام اليومي" : "Usage intensif." }
