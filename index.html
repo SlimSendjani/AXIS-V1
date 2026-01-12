@@ -18,11 +18,13 @@
               mono: ['JetBrains Mono', 'monospace'],
             },
             colors: {
-              bg: '#FFFFFF', 
-              fg: '#000000', 
+              bg: '#FFFFFF',
+              fg: '#000000',
               concrete: '#F3F3F3',
               accent: '#000000',
-              error: '#D00000'
+              gold: '#D4AF37',
+              error: '#D00000',
+              success: '#00AA00'
             },
             animation: {
               'marquee': 'marquee 20s linear infinite',
@@ -58,7 +60,7 @@
         background: #000000;
         color: #FFFFFF;
         text-transform: uppercase;
-        font-family: 'Oswald', 'Cairo', sans-serif;
+        font-family: 'Oswald', 'Cairo', 'sans-serif';
         font-weight: 700;
         letter-spacing: 0.1em;
         transition: all 0.2s ease;
@@ -79,6 +81,24 @@
       
       [dir="rtl"] .btn-axis {
         letter-spacing: 0;
+      }
+      
+      /* Correction pour le checkout - inputs visibles */
+      input[type="text"],
+      input[type="tel"],
+      textarea,
+      select {
+        background-color: #FFFFFF !important;
+        color: #000000 !important;
+        border-color: #000000 !important;
+      }
+      
+      input[type="text"]:focus,
+      input[type="tel"]:focus,
+      textarea:focus,
+      select:focus {
+        border-color: #D4AF37 !important;
+        box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1) !important;
       }
     </style>
   </head>
