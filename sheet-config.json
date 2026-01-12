@@ -1,0 +1,29 @@
+{
+  "description": "Configuration pour Google Sheets - Intégration des commandes AXIS",
+  "sheets_setup": {
+    "spreadsheet_id": "VOTRE_ID_SHEET_ICI",
+    "sheet_name": "Commandes",
+    "api_key": "VOTRE_API_KEY_GOOGLE_ICI",
+    "instructions": [
+      "1. Créez un Google Sheet à: https://sheets.google.com",
+      "2. Partagez-le en lecture avec: AXIS@appspot.gserviceaccount.com",
+      "3. Copiez l'ID du sheet dans spreadsheet_id",
+      "4. Activez Google Sheets API dans: https://console.cloud.google.com",
+      "5. Créez une API key et collez-la dans api_key"
+    ],
+    "columns": {
+      "A": "ID Commande",
+      "B": "Date/Heure",
+      "C": "Nom Client",
+      "D": "Email",
+      "E": "Téléphone",
+      "F": "Wilaya",
+      "G": "Adresse",
+      "H": "Produits",
+      "I": "Sous-total",
+      "J": "Livraison",
+      "K": "Total",
+      "L": "Statut"
+    }
+  }
+}

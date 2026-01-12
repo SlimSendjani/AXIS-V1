@@ -1,67 +1,28 @@
 export type Language = 'fr' | 'en' | 'ar';
 
-export interface Feature {
-  title: string;
-  desc: string;
-}
-
-export interface Product {
-  id: string;
-  name: string;
-  tagline: string;
-  price: number;
-  oldPrice: number;
-  description: string;
-  shortDesc: string;
-  image: string;
-  gallery?: string[];
-  features: Feature[];
-  specs: string[];
-  painPoint: string;
-  solution: string;
-  benefit: string;
-}
-
-export interface Wilaya {
-  code: string;
-  name: string;
-  arName?: string;
-}
-
 export interface Translation {
-  // Navigation
   navShop: string;
   navAbout: string;
-  
-  // Hero
   heroTitle: string;
   heroSubtitle: string;
   heroCta: string;
   certified: string;
   edition: string;
-  
-  // Stats
   stat1: string;
   stat1Label: string;
   stat2: string;
   stat2Label: string;
   stat3: string;
   stat3Label: string;
-  
-  // Problem Section
   problemTitle: string;
   problemText: string;
   problem1: string;
   problem2: string;
-  
-  // Products
   productsTitle: string;
   productsSubtitle: string;
   addToCart: string;
   buyNow: string;
   viewProduct: string;
-  
-  // Tech Section
   techTitle: string;
   techSub: string;
   tech1Title: string;
@@ -72,15 +33,11 @@ export interface Translation {
   tech3Desc: string;
   tech4Title: string;
   tech4Desc: string;
-  
-  // Reviews
   reviewsTitle: string;
   review1: string;
   review2: string;
   review3: string;
   verifiedClient: string;
-  
-  // Checkout & Footer
   shipping: string;
   whyUsTitle1: string;
   whyUsDesc1: string;
@@ -105,9 +62,8 @@ export interface Translation {
   selectLoadout: string;
   finalCtaTitle: string;
   finalCtaSub: string;
-
-  // New translations for missing parts
   subtotal: string;
+  shippingCost: string;
   tax: string;
   total: string;
   included: string;
@@ -115,5 +71,60 @@ export interface Translation {
   errName: string;
   errPhone: string;
   errWilaya: string;
-  bumpText: string; // "+ Maintenance Kit" text in message
+  bumpText: string;
+  cart: string;
+  cartEmpty: string;
+  remove: string;
+  updateCart: string;
+  proceedCheckout: string;
+  orderPlaced: string;
+  orderConfirmEmail: string;
+  trackingInfo: string;
+}
+
+export interface Product {
+  id: string;
+  name: string;
+  tagline: string;
+  price: number;
+  oldPrice: number;
+  shortDesc: string;
+  description: string;
+  image: string;
+  gallery: string[];
+  features: { title: string; desc: string }[];
+  specs: string[];
+  painPoint: string;
+  solution: string;
+  benefit: string;
+}
+
+export interface Wilaya {
+  code: string;
+  name: string;
+  arName: string;
+}
+
+export interface CartItem {
+  productId: string;
+  quantity: number;
+  productName: string;
+  price: number;
+}
+
+export interface Order {
+  id: string;
+  timestamp: string;
+  customer: {
+    name: string;
+    email: string;
+    phone: string;
+    wilaya: string;
+    address: string;
+  };
+  items: CartItem[];
+  subtotal: number;
+  shippingCost: number;
+  total: number;
+  status: 'pending' | 'confirmed' | 'shipped' | 'delivered';
 }

@@ -1,27 +1,56 @@
 import { Product, Wilaya, Translation, Language } from './types';
 
 export const BRAND_NAME = "AXIS";
-export const PHONE_NUMBER_WHATSAPP = "213555123456"; 
+export const PHONE_NUMBER_WHATSAPP = "213555123456";
+export const ADMIN_EMAIL = "slim.sendjani@gmail.com";
+export const FORMSPREE_ID = "mqzeeaqk"; // Formspree pour recevoir les emails
 
 // Images produits depuis le repo GitHub - URLs raw
 const REPO_BASE = "https://raw.githubusercontent.com/SlimSendjani/AXIS-V1/main";
 
 const PRODUCT_IMGS = {
-  // Gaine amincissante (image femme bodysuit)
   shapewear: `${REPO_BASE}/1e999d18-4d8d-4dc0-8b96-a8ec1e41df17.png`,
   shapewear2: `${REPO_BASE}/3a16206c-2971-40da-9972-6bba3e835300.png`,
-  
-  // Correcteur de posture
   posture: `${REPO_BASE}/91155762-e3ed-4cd3-967b-94d45382b4f6.png`,
   posture2: `${REPO_BASE}/91155762-e3ed-4cd3-967b-94d45382b4f6.png`,
-  
-  // Genouillère premium
   knee: `${REPO_BASE}/aebef839-045c-41b6-be23-609edac91b3d.png`,
   knee2: `${REPO_BASE}/aebef839-045c-41b6-be23-609edac91b3d.png`,
-  
-  // Semelles orthopédiques
   insoles: `${REPO_BASE}/86d18a90-aaab-4a27-90bf-01668154280b.png`,
   insoles2: `${REPO_BASE}/86d18a90-aaab-4a27-90bf-01668154280b.png`
+};
+
+// Frais de livraison intelligents par zone (en DA)
+// Zone 1 (Alger + proches): 500 DA
+// Zone 2 (Région Nord): 800 DA
+// Zone 3 (Région Centre): 1000 DA
+// Zone 4 (Région Est): 1200 DA
+// Zone 5 (Région Ouest): 1200 DA
+// Zone 6 (Région Sud): 1500 DA
+
+export const SHIPPING_ZONES = {
+  zone1: { name: "Alger & Proximité", price: 500, wilayas: ["16", "09", "35", "42"] }, // Alger, Blida, Boumerdès, Tipaza
+  zone2: { name: "Nord Algérie", price: 800, wilayas: ["01", "02", "15", "18", "21", "23", "24", "25", "36", "37", "38", "39", "40", "41", "43", "44", "51", "56", "57"] }, // Adrar, Chlef, Tizi Ouzou, Jijel, Skikda, Annaba, Guelma, Constantine, El Tarf, Tindouf, Tissemsilt, El Oued, Khenchela, Souk Ahras, Mila, Aïn Defla, Ouled Djellal, Djanet, El M'Ghair
+  zone3: { name: "Centre Algérie", price: 1000, wilayas: ["03", "05", "06", "07", "17", "19", "26", "27", "28", "29", "30", "47", "49", "50", "52", "53", "54", "55", "58"] }, // Laghouat, Batna, Béjaïa, Biskra, Djelfa, Sétif, Médéa, Mostaganem, M'Sila, Mascara, Ouargla, Ghardaïa, Timimoun, Bordj Badji Mokhtar, Béni Abbès, In Salah, In Guezzam, Touggourt, El Meniaa
+  zone4: { name: "Est Algérie", price: 1200, wilayas: ["04", "08", "12", "13", "14", "20", "22", "31", "32", "33", "45", "46", "48"] }, // Oum El Bouaghi, Béchar, Tébessa, Tlemcen, Tiaret, Saïda, Sidi Bel Abbès, Oran, El Bayadh, Illizi, Naâma, Aïn Témouchent, Relizane
+  zone5: { name: "Ouest Algérie", price: 1200, wilayas: ["10", "11", "34"] }, // Bouira, Tamanrasset, Bordj Bou Arreridj
+};
+
+export const getShippingPrice = (wilayaCode: string): number => {
+  for (const zone of Object.values(SHIPPING_ZONES)) {
+    if (zone.wilayas.includes(wilayaCode)) {
+      return zone.price;
+    }
+  }
+  return 1500; // Default: wilaya inconnue
+};
+
+export const getShippingZone = (wilayaCode: string): string => {
+  for (const zone of Object.values(SHIPPING_ZONES)) {
+    if (zone.wilayas.includes(wilayaCode)) {
+      return zone.name;
+    }
+  }
+  return "Livraison Standard";
 };
 
 export const TRANSLATIONS: Record<Language, Translation> = {
@@ -45,8 +74,8 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     problem2: "PERTE DE PUISSANCE",
     productsTitle: "L'ARSENAL",
     productsSubtitle: "QUANTITÉ LIMITÉE / LOT 04",
-    addToCart: "SÉLECTIONNER",
-    buyNow: "ACQUÉRIR",
+    addToCart: "AJOUTER",
+    buyNow: "ACHETER",
     viewProduct: "ANALYSER",
     techTitle: "ARCHITECTURE CORPORELLE",
     techSub: "MATÉRIAUX DE POINTE",
@@ -88,6 +117,7 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     finalCtaTitle: "N'ATTENDEZ PAS LE DÉCLIN",
     finalCtaSub: "PRENEZ LE CONTRÔLE",
     subtotal: "SOUS-TOTAL",
+    shippingCost: "FRAIS DE LIVRAISON",
     tax: "TAXES",
     total: "TOTAL",
     included: "INCLUS",
@@ -95,7 +125,15 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     errName: "ERREUR: NOM INVALIDE",
     errPhone: "ERREUR: FORMAT MOBILE INCORRECT",
     errWilaya: "ERREUR: WILAYA REQUISE",
-    bumpText: "+ KIT MAINTENANCE"
+    bumpText: "+ KIT MAINTENANCE",
+    cart: "PANIER",
+    cartEmpty: "Votre panier est vide",
+    remove: "RETIRER",
+    updateCart: "METTRE À JOUR",
+    proceedCheckout: "PROCÉDER AU PAIEMENT",
+    orderPlaced: "COMMANDE CONFIRMÉE",
+    orderConfirmEmail: "Un email de confirmation a été envoyé à",
+    trackingInfo: "Nous vous recontacterons sous 24h pour confirmer votre livraison"
   },
   en: {
     navShop: "ARSENAL",
@@ -117,7 +155,7 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     problem2: "POWER LOSS",
     productsTitle: "THE ARSENAL",
     productsSubtitle: "LIMITED BATCH / 04",
-    addToCart: "SELECT",
+    addToCart: "ADD",
     buyNow: "ACQUIRE",
     viewProduct: "ANALYZE",
     techTitle: "BODY ARCHITECTURE",
@@ -160,6 +198,7 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     finalCtaTitle: "DON'T WAIT FOR DECLINE",
     finalCtaSub: "TAKE CONTROL",
     subtotal: "SUBTOTAL",
+    shippingCost: "SHIPPING COST",
     tax: "TAX",
     total: "TOTAL",
     included: "INC.",
@@ -167,7 +206,15 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     errName: "ERROR: INVALID NAME",
     errPhone: "ERROR: INVALID MOBILE FORMAT",
     errWilaya: "ERROR: REGION REQUIRED",
-    bumpText: "+ MAINTENANCE KIT"
+    bumpText: "+ MAINTENANCE KIT",
+    cart: "CART",
+    cartEmpty: "Your cart is empty",
+    remove: "REMOVE",
+    updateCart: "UPDATE CART",
+    proceedCheckout: "PROCEED TO CHECKOUT",
+    orderPlaced: "ORDER CONFIRMED",
+    orderConfirmEmail: "A confirmation email has been sent to",
+    trackingInfo: "We will contact you within 24h to confirm your delivery"
   },
   ar: {
     navShop: "الترسانة",
@@ -189,7 +236,7 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     problem2: "فقدان القوة",
     productsTitle: "الترسانة",
     productsSubtitle: "كمية محدودة / الدفعة 04",
-    addToCart: "اختيار",
+    addToCart: "إضافة",
     buyNow: "امتلك الآن",
     viewProduct: "تحليل المنتج",
     techTitle: "هندسة الجسد",
@@ -232,6 +279,7 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     finalCtaTitle: "لا تنتظر الانهيار",
     finalCtaSub: "استعد السيطرة",
     subtotal: "المجموع الفرعي",
+    shippingCost: "تكاليف الشحن",
     tax: "الضرائب",
     total: "الإجمالي",
     included: "شامل",
@@ -239,7 +287,15 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     errName: "خطأ: الاسم غير صالح",
     errPhone: "خطأ: صيغة الهاتف غير صحيحة",
     errWilaya: "خطأ: يرجى تحديد الولاية",
-    bumpText: "+ طقم صيانة"
+    bumpText: "+ طقم صيانة",
+    cart: "سلة التسوق",
+    cartEmpty: "سلتك فارغة",
+    remove: "إزالة",
+    updateCart: "تحديث السلة",
+    proceedCheckout: "المتابعة للدفع",
+    orderPlaced: "تم تأكيد الطلب",
+    orderConfirmEmail: "تم إرسال بريد تأكيد إلى",
+    trackingInfo: "سنتصل بك خلال 24 ساعة لتأكيد التسليم"
   }
 };
 
