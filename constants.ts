@@ -1,5 +1,11 @@
 import { Product, Wilaya, Translation, Language } from './types';
 
+import imageShapewear from './1e999d18-4d8d-4dc0-8b96-a8ec1e41df17.png';
+import imageShapewear2 from './3a16206c-2971-40da-9972-6bba3e835300.png';
+import imagePosture from './91155762-e3ed-4cd3-967b-94d45382b4f6.png';
+import imageKnee from './aebef839-045c-41b6-be23-609edac91b3d.png';
+import imageInsoles from './86d18a90-aaab-4a27-90bf-01668154280b.png';
+
 export const BRAND_NAME = "AXIS";
 export const PHONE_NUMBER_WHATSAPP = "213555123456";
 export const ADMIN_EMAIL = "slim.sendjani@gmail.com";
@@ -15,18 +21,16 @@ export const GOOGLE_SHEETS_CONFIG = {
 // Formspree Configuration
 export const FORMSPREE_ID = "mqzeeaqk";
 
-// Images produits depuis le repo GitHub - URLs raw
-const REPO_BASE = "https://raw.githubusercontent.com/SlimSendjani/AXIS-V1/main";
-
+// Product images
 const PRODUCT_IMGS = {
-  shapewear: `${REPO_BASE}/1e999d18-4d8d-4dc0-8b96-a8ec1e41df17.png`,
-  shapewear2: `${REPO_BASE}/3a16206c-2971-40da-9972-6bba3e835300.png`,
-  posture: `${REPO_BASE}/91155762-e3ed-4cd3-967b-94d45382b4f6.png`,
-  posture2: `${REPO_BASE}/91155762-e3ed-4cd3-967b-94d45382b4f6.png`,
-  knee: `${REPO_BASE}/aebef839-045c-41b6-be23-609edac91b3d.png`,
-  knee2: `${REPO_BASE}/aebef839-045c-41b6-be23-609edac91b3d.png`,
-  insoles: `${REPO_BASE}/86d18a90-aaab-4a27-90bf-01668154280b.png`,
-  insoles2: `${REPO_BASE}/86d18a90-aaab-4a27-90bf-01668154280b.png`
+  shapewear: imageShapewear,
+  shapewear2: imageShapewear2,
+  posture: imagePosture,
+  posture2: imagePosture,
+  knee: imageKnee,
+  knee2: imageKnee,
+  insoles: imageInsoles,
+  insoles2: imageInsoles
 };
 
 // Frais de livraison intelligents par zone (en DA)
