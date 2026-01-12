@@ -13,7 +13,7 @@
         theme: {
           extend: {
             fontFamily: {
-              sans: ['Inter', 'Cairo', 'sans-serif'], // Cairo ajouté pour l'arabe
+              sans: ['Inter', 'Cairo', 'sans-serif'],
               display: ['Oswald', 'Cairo', 'sans-serif'],
               mono: ['JetBrains Mono', 'monospace'],
             },
@@ -22,7 +22,7 @@
               fg: '#000000', 
               concrete: '#F3F3F3',
               accent: '#000000',
-              error: '#D00000' // Rouge plus sang/urgent
+              error: '#D00000'
             },
             animation: {
               'marquee': 'marquee 20s linear infinite',
@@ -77,24 +77,13 @@
         scrollbar-width: none;
       }
       
-      /* RTL Specific adjustments if needed */
       [dir="rtl"] .btn-axis {
         letter-spacing: 0;
       }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react-router-dom": "https://esm.sh/react-router-dom@6.22.3",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
-  }
-}
-</script>
-</head>
+  </head>
   <body>
     <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>
