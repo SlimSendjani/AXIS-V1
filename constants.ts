@@ -3,14 +3,20 @@ import { Product, Wilaya, Translation, Language } from './types';
 export const BRAND_NAME = "AXIS";
 export const PHONE_NUMBER_WHATSAPP = "213555123456"; 
 
-// Images produits - Nouvelles photos professionnelles
+// Images produits optimisées - Qualité web (600px, 80% qualité)
 const PRODUCT_IMGS = {
-  bodysuit: "https://raw.githubusercontent.com/SlimSendjani/AXIS-V1/main/1e999d18-4d8d-4dc0-8b96-a8ec1e41df17.png",
-  bodysuitFlat: "https://raw.githubusercontent.com/SlimSendjani/AXIS-V1/main/3a16206c-2971-40da-9972-6bba3e835300.png",
-  knee: "https://raw.githubusercontent.com/SlimSendjani/AXIS-V1/main/aebef839-045c-41b6-be23-609edac91b3d.png",
-  spine: "https://raw.githubusercontent.com/SlimSendjani/AXIS-V1/main/91155762-e3ed-4cd3-967b-94d45382b4f6.png",
-  insoles: "https://raw.githubusercontent.com/SlimSendjani/AXIS-V1/main/86d18a90-aaab-4a27-90bf-01668154280b.png",
-  neck: "https://raw.githubusercontent.com/SlimSendjani/AXIS-V1/main/91155762-e3ed-4cd3-967b-94d45382b4f6.png"
+  // Gaine amincissante
+  shapewear: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&q=80&auto=format&fit=crop",
+  shapewear2: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&q=80&auto=format&fit=crop",
+  // Correcteur de posture
+  posture: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&q=80&auto=format&fit=crop",
+  posture2: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80&auto=format&fit=crop",
+  // Genouillère premium
+  knee: "https://images.unsplash.com/photo-1597452485669-2c7bb5fef90d?w=600&q=80&auto=format&fit=crop",
+  knee2: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=80&auto=format&fit=crop",
+  // Semelles orthopédiques
+  insoles: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&q=80&auto=format&fit=crop",
+  insoles2: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&q=80&auto=format&fit=crop"
 };
 
 export const TRANSLATIONS: Record<Language, Translation> = {
@@ -50,7 +56,7 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     reviewsTitle: "RAPPORTS DE TERRAIN",
     review1: "Une transformation radicale. Ma posture impose le respect dès que j'entre dans une pièce. AXIS n'est pas un accessoire, c'est une nécessité.",
     review2: "Après 12h debout, mes jambes sont fraîches. C'est comme avoir une nouvelle paire de jambes chaque matin.",
-    review3: "La douleur au cou a disparu en 3 jours. Je peux enfin me concentrer sur mes objectifs.",
+    review3: "La douleur au dos a disparu en 3 jours. Je peux enfin me concentrer sur mes objectifs.",
     verifiedClient: "MEMBRE VÉRIFIÉ",
     shipping: "LIVRAISON",
     whyUsTitle1: "LIVRAISON NATIONALE",
@@ -122,7 +128,7 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     reviewsTitle: "FIELD REPORTS",
     review1: "Radical transformation. My posture commands respect the moment I walk into a room. AXIS is not an accessory, it's a necessity.",
     review2: "After 12 hours standing, my legs feel fresh. It's like having a new pair of legs every morning.",
-    review3: "Neck pain vanished in 3 days. I can finally focus on my goals.",
+    review3: "Back pain vanished in 3 days. I can finally focus on my goals.",
     verifiedClient: "VERIFIED MEMBER",
     shipping: "SHIPPING",
     whyUsTitle1: "NATIONWIDE DELIVERY",
@@ -194,7 +200,7 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     reviewsTitle: "تقارير الميدان",
     review1: "تحول جذري. وقفتي تفرض الاحترام فور دخولي أي مكان. AXIS ليس مجرد إكسسوار، إنه ضرورة.",
     review2: "بعد 12 ساعة من الوقوف، ساقاي تشعران بالنشاط. كأنني أملك ساقين جديدتين كل صباح.",
-    review3: "اختفى ألم الرقبة في 3 أيام. أخيراً يمكنني التركيز على أهدافي.",
+    review3: "اختفى ألم الظهر في 3 أيام. أخيراً يمكنني التركيز على أهدافي.",
     verifiedClient: "عضو موثق",
     shipping: "الشحن",
     whyUsTitle1: "توصيل وطني",
@@ -237,17 +243,17 @@ export const getProducts = (lang: Language): Product[] => {
   
   return [
     {
-      id: "bodysuit",
+      id: "shapewear",
       name: "SCULPT-X1",
-      tagline: isAr ? "نحت الجسم الكامل" : "FULL BODY SCULPT",
+      tagline: isAr ? "غين امنحفة متطورة" : "GAINE AMINCISSANTE",
       price: 5900,
       oldPrice: 8500,
       shortDesc: isAr ? "يخفي العيوب فوراً ويعيد رسم القوام." : "Efface les imperfections instantanément. Redéfinit la silhouette.",
       description: isAr 
         ? "درعك اليومي ضد الترهل. قماش ضاغط متطور يعمل كبشرة ثانية، يشد البطن، يرفع الصدر، وينحت الخصر في لحظة ارتدائه. ثقة مطلقة تحت أي ملابس."
         : "Votre armure quotidienne contre le relâchement. Textile compressif avancé agissant comme une seconde peau : gaine le ventre, remonte le buste et sculpte la taille dès l'enfilage. Confiance absolue sous n'importe quelle tenue.",
-      image: PRODUCT_IMGS.bodysuit,
-      gallery: [PRODUCT_IMGS.bodysuit, PRODUCT_IMGS.bodysuitFlat],
+      image: PRODUCT_IMGS.shapewear,
+      gallery: [PRODUCT_IMGS.shapewear, PRODUCT_IMGS.shapewear2],
       features: [
         { title: isAr ? "شد فوري" : "INSTANT LIFT", desc: isAr ? "نتيجة مرئية في ثوان" : "Résultat visible en secondes." },
         { title: isAr ? "إخفاء تام" : "INVISIBLE", desc: isAr ? "لا يظهر تحت الملابس" : "Indétectable sous les vêtements." }
@@ -258,59 +264,17 @@ export const getProducts = (lang: Language): Product[] => {
       benefit: "Impact"
     },
     {
-      id: "neck",
-      name: "NECK-ZERO",
-      tagline: isAr ? "تحرير الفقرات العنقية" : "CERVICAL RELEASE",
-      price: 3200,
-      oldPrice: 5000,
-      shortDesc: isAr ? "يزيل ضغط الرقبة والصداع في دقائق." : "Élimine la pression cervicale et les maux de tête en quelques minutes.",
-      description: isAr 
-        ? "الجهاز النهائي لمن يقضون ساعات أمام الشاشات. تقنية السحب الهوائي تباعد بين الفقرات بلطف، مما يزيل الضغط عن الأعصاب ويعيد تدفق الدم للرأس. وداعاً للصداع."
-        : "L'outil ultime pour ceux qui vivent devant un écran. La traction pneumatique écarte doucement les vertèbres, libérant les nerfs comprimés et rétablissant le flux sanguin vers le cerveau. Adieu les migraines.",
-      image: PRODUCT_IMGS.spine,
-      gallery: [PRODUCT_IMGS.spine],
-      features: [
-        { title: isAr ? "سحب هوائي" : "TRACTION AIR", desc: isAr ? "تخفيف الضغط العصبي" : "Décompression nerveuse." },
-        { title: isAr ? "راحة فورية" : "INSTANT RELIEF", desc: isAr ? "استرخاء عضلات الرقبة" : "Relâchement musculaire." }
-      ],
-      specs: ["Velours Premium", "Pompe Manuelle", "3 Niveaux"],
-      painPoint: "Cou",
-      solution: "Traction",
-      benefit: "Libération"
-    },
-    {
-      id: "knee",
-      name: "KINETIC GUARD",
-      tagline: isAr ? "تدعيم المفاصل التكتيكي" : "TACTICAL JOINT SUPPORT",
-      price: 2900,
-      oldPrice: 4200,
-      shortDesc: isAr ? "حول ركبتك إلى حصن منيع." : "Transformez votre genou en forteresse.",
-      description: isAr 
-        ? "الألم يجعلك ضعيفاً. هذه الدعامة توفر ثباتاً ميكانيكياً وحرارياً للركبة، مما يسمح لك بالحركة، الجري، والعمل دون خوف من الإصابة أو الألم."
-        : "La douleur vous affaiblit. Cette genouillère offre une stabilité mécanique et thermique, vous permettant de bouger, courir et travailler sans la peur de la blessure ou de la douleur.",
-      image: PRODUCT_IMGS.knee,
-      gallery: [PRODUCT_IMGS.knee],
-      features: [
-        { title: isAr ? "تثبيت كامل" : "LOCKDOWN", desc: isAr ? "أشرطة مانعة للانزلاق" : "Sangles anti-glisse." },
-        { title: isAr ? "تنشيط حراري" : "THERMAL ACT", desc: isAr ? "تسريع الاستشفاء" : "Accélère la récupération." }
-      ],
-      specs: ["Néoprène 3mm", "Ressorts Latéraux", "Ajustable"],
-      painPoint: "Douleur",
-      solution: "Support",
-      benefit: "Puissance"
-    },
-    {
-      id: "spine",
+      id: "posture",
       name: "POSTURE RIG",
-      tagline: isAr ? "إعادة ضبط العمود الفقري" : "SPINE REALIGNMENT",
+      tagline: isAr ? "مصحح الوضعية" : "CORRECTEUR DE POSTURE",
       price: 3500,
       oldPrice: 5500,
       shortDesc: isAr ? "افرض حضورك بقامة مستقيمة." : "Imposez votre présence avec une posture droite.",
       description: isAr 
         ? "لغة الجسد هي كل شيء. هذا الهيكل يجبر كتفيك على العودة للخلف وصدرك للأمام. يعيد برمجة عضلات ظهرك لتقف بشموخ وتتنفس بعمق. استعد هيبتك."
         : "Le langage corporel est tout. Ce rig force vos épaules vers l'arrière et votre torse vers l'avant. Il reprogramme vos muscles dorsaux pour vous tenir droit et respirer profondément. Réclamez votre espace.",
-      image: PRODUCT_IMGS.spine,
-      gallery: [PRODUCT_IMGS.spine],
+      image: PRODUCT_IMGS.posture,
+      gallery: [PRODUCT_IMGS.posture, PRODUCT_IMGS.posture2],
       features: [
         { title: isAr ? "تصحيح المسار" : "CORRECTION", desc: isAr ? "استقامة فورية" : "Alignement immédiat." },
         { title: isAr ? "ذاكرة عضلية" : "MUSCLE MEMORY", desc: isAr ? "نتائج دائمة" : "Résultats permanents." }
@@ -321,22 +285,43 @@ export const getProducts = (lang: Language): Product[] => {
       benefit: "Dominance"
     },
     {
+      id: "knee",
+      name: "KINETIC GUARD",
+      tagline: isAr ? "جنويلير بريميوم" : "GENOUILLÈRE PREMIUM",
+      price: 2900,
+      oldPrice: 4200,
+      shortDesc: isAr ? "حول ركبتك إلى حصن منيع." : "Transformez votre genou en forteresse.",
+      description: isAr 
+        ? "الألم يجعلك ضعيفاً. هذه الدعامة توفر ثباتاً ميكانيكياً وحرارياً للركبة، مما يسمح لك بالحركة، الجري، والعمل دون خوف من الإصابة أو الألم."
+        : "La douleur vous affaiblit. Cette genouillère offre une stabilité mécanique et thermique, vous permettant de bouger, courir et travailler sans la peur de la blessure ou de la douleur.",
+      image: PRODUCT_IMGS.knee,
+      gallery: [PRODUCT_IMGS.knee, PRODUCT_IMGS.knee2],
+      features: [
+        { title: isAr ? "تثبيت كامل" : "LOCKDOWN", desc: isAr ? "أشرطة مانعة للانزلاق" : "Sangles anti-glisse." },
+        { title: isAr ? "تنشيط حراري" : "THERMAL ACT", desc: isAr ? "تسريع الاستشفاء" : "Accélère la récupération." }
+      ],
+      specs: ["Néoprène 3mm", "Ressorts Latéraux", "Ajustable"],
+      painPoint: "Douleur",
+      solution: "Support",
+      benefit: "Puissance"
+    },
+    {
       id: "insoles",
-      name: "GRAVITY SOLES",
-      tagline: isAr ? "نظام تعليق للقدمين" : "FOOT SUSPENSION SYSTEM",
+      name: "PLANTAR RELIEF",
+      tagline: isAr ? "سمال للتهاب اللفافة الأخمصية" : "SEMELLES FASCIITE PLANTAIRE",
       price: 2500,
       oldPrice: 3800,
-      shortDesc: isAr ? "امشِ فوق أي سطح دون تعب." : "Marchez sur n'importe quelle surface sans fatigue.",
+      shortDesc: isAr ? "وداعاً لآلام القدم. امشِ براحة تامة." : "Adieu les douleurs plantaires. Marchez avec un confort total.",
       description: isAr 
-        ? "ترقية ضرورية لأي حذاء. طبقة الجل الهندسية تمتص صدمات الارتطام بالأرض، تحمي ركبتيك وعمودك الفقري من الاهتزازات. طاقة لا تنتهي طوال اليوم."
-        : "Upgrade essentiel pour toute chaussure. La couche de gel ingénierie absorbe les chocs d'impact, protégeant vos genoux et votre colonne des vibrations. Une énergie inépuisable toute la journée.",
+        ? "سمال مصممة خصيصاً لعلاج التهاب اللفافة الأخمصية. دعم مثالي للقوس، توزيع متساوي للضغط، وامتصاص الصدمات. راحة فورية من أول خطوة."
+        : "Semelles conçues spécifiquement pour la fasciite plantaire. Support optimal de la voûte, répartition uniforme de la pression et absorption des chocs. Soulagement immédiat dès le premier pas.",
       image: PRODUCT_IMGS.insoles,
-      gallery: [PRODUCT_IMGS.insoles],
+      gallery: [PRODUCT_IMGS.insoles, PRODUCT_IMGS.insoles2],
       features: [
-        { title: isAr ? "امتصاص الصدمات" : "SHOCK ABSORB", desc: isAr ? "حماية المفاصل" : "Protection articulaire." },
+        { title: isAr ? "دعم القوس" : "ARCH SUPPORT", desc: isAr ? "تخفيف الضغط على اللفافة" : "Soulage la fasciite." },
         { title: isAr ? "راحة قصوى" : "MAX COMFORT", desc: isAr ? "للاستخدام اليومي" : "Usage intensif." }
       ],
-      specs: ["Gel Silice", "Découpe Facile", "Hygiénique"],
+      specs: ["Gel Silice", "Support Voûte", "Anti-Fatigue"],
       painPoint: "Pieds",
       solution: "Amorti",
       benefit: "Endurance"
@@ -369,10 +354,10 @@ export const WILAYAS: Wilaya[] = [
 
 export const FAKE_SALES_DATA = [
   { name: "Sonia M.", city: "Hydra", product: "SCULPT-X1" },
-  { name: "Amira K.", city: "Oran", product: "GRAVITY SOLES" },
+  { name: "Amira K.", city: "Oran", product: "PLANTAR RELIEF" },
   { name: "Farida B.", city: "Sétif", product: "POSTURE RIG" },
   { name: "Nassim Z.", city: "Constantine", product: "KINETIC GUARD" },
-  { name: "Yasmine D.", city: "Alger", product: "NECK-ZERO" },
-  { name: "Karim L.", city: "Annaba", product: "SCULPT-X1" },
-  { name: "Leila H.", city: "Tlemcen", product: "NECK-ZERO" },
+  { name: "Yasmine D.", city: "Alger", product: "SCULPT-X1" },
+  { name: "Karim L.", city: "Annaba", product: "POSTURE RIG" },
+  { name: "Leila H.", city: "Tlemcen", product: "PLANTAR RELIEF" },
 ];
