@@ -4,7 +4,7 @@ import { resolve } from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  // base removed for local dev simplicity
+  base: '/AXIS-V1/',  // CRITICAL: GitHub Pages needs this!
   publicDir: 'public',
   build: {
     outDir: 'dist',
