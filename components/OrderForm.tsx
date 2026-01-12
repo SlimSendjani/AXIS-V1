@@ -42,19 +42,19 @@ const OrderForm: React.FC<OrderFormProps> = ({ initialProduct, t, products, lang
     setError(null);
 
     if (formData.fullName.length < 3) {
-      setError("ERREUR: NOM INVALIDE");
+      setError(t.errName);
       return;
     }
     if (!validatePhone(formData.phone)) {
-      setError("ERREUR: FORMAT MOBILE INCORRECT");
+      setError(t.errPhone);
       return;
     }
     if (!formData.wilaya) {
-      setError("ERREUR: WILAYA REQUISE");
+      setError(t.errWilaya);
       return;
     }
 
-    const bumpText = formData.isOrderBumpChecked ? "+ KIT MAINTENANCE" : "";
+    const bumpText = formData.isOrderBumpChecked ? t.bumpText : "";
     const message = `⚡ AXIS ORDER ⚡%0A%0A👤 ${formData.fullName}%0A📱 ${formData.phone}%0A📍 ${formData.wilaya}, ${formData.commune}%0A%0A📦 ITEM: ${formData.product}%0A💰 TOTAL: ${total} DA ${bumpText}`;
 
     window.open(`https://wa.me/${PHONE_NUMBER_WHATSAPP}?text=${message}`, '_blank');

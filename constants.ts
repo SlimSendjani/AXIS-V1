@@ -50,7 +50,7 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     review2: "Après 12h debout, mes jambes sont fraîches. C'est comme avoir une nouvelle paire de jambes chaque matin.",
     review3: "La douleur au cou a disparu en 3 jours. Je peux enfin me concentrer sur mes objectifs.",
     verifiedClient: "MEMBRE VÉRIFIÉ",
-    shipping: "EXPÉDITION EXPRESS",
+    shipping: "LIVRAISON",
     whyUsTitle1: "LIVRAISON NATIONALE",
     whyUsDesc1: "58 Wilayas couvertes.",
     whyUsTitle2: "DESIGN FURTIF",
@@ -73,7 +73,16 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     details: "DÉTAILS TECHNIQUES",
     selectLoadout: "SÉLECTIONNEZ VOTRE MODÈLE",
     finalCtaTitle: "N'ATTENDEZ PAS LE DÉCLIN",
-    finalCtaSub: "PRENEZ LE CONTRÔLE"
+    finalCtaSub: "PRENEZ LE CONTRÔLE",
+    subtotal: "SOUS-TOTAL",
+    tax: "TAXES",
+    total: "TOTAL",
+    included: "INCLUS",
+    qty: "QTÉ",
+    errName: "ERREUR: NOM INVALIDE",
+    errPhone: "ERREUR: FORMAT MOBILE INCORRECT",
+    errWilaya: "ERREUR: WILAYA REQUISE",
+    bumpText: "+ KIT MAINTENANCE"
   },
   en: {
     navShop: "ARSENAL",
@@ -113,7 +122,7 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     review2: "After 12 hours standing, my legs feel fresh. It's like having a new pair of legs every morning.",
     review3: "Neck pain vanished in 3 days. I can finally focus on my goals.",
     verifiedClient: "VERIFIED MEMBER",
-    shipping: "EXPRESS SHIPPING",
+    shipping: "SHIPPING",
     whyUsTitle1: "NATIONWIDE DELIVERY",
     whyUsDesc1: "All 58 Wilayas.",
     whyUsTitle2: "STEALTH DESIGN",
@@ -136,7 +145,16 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     details: "TECHNICAL SPECS",
     selectLoadout: "SELECT YOUR MODEL",
     finalCtaTitle: "DON'T WAIT FOR DECLINE",
-    finalCtaSub: "TAKE CONTROL"
+    finalCtaSub: "TAKE CONTROL",
+    subtotal: "SUBTOTAL",
+    tax: "TAX",
+    total: "TOTAL",
+    included: "INC.",
+    qty: "QTY",
+    errName: "ERROR: INVALID NAME",
+    errPhone: "ERROR: INVALID MOBILE FORMAT",
+    errWilaya: "ERROR: REGION REQUIRED",
+    bumpText: "+ MAINTENANCE KIT"
   },
   ar: {
     navShop: "الترسانة",
@@ -176,7 +194,7 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     review2: "بعد 12 ساعة من الوقوف، ساقاي تشعران بالنشاط. كأنني أملك ساقين جديدتين كل صباح.",
     review3: "اختفى ألم الرقبة في 3 أيام. أخيراً يمكنني التركيز على أهدافي.",
     verifiedClient: "عضو موثق",
-    shipping: "شحن سريع",
+    shipping: "الشحن",
     whyUsTitle1: "توصيل وطني",
     whyUsDesc1: "تغطية شاملة لـ 58 ولاية.",
     whyUsTitle2: "تصميم خفي",
@@ -199,7 +217,16 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     details: "المواصفات التقنية",
     selectLoadout: "اختر نسختك",
     finalCtaTitle: "لا تنتظر الانهيار",
-    finalCtaSub: "استعد السيطرة"
+    finalCtaSub: "استعد السيطرة",
+    subtotal: "المجموع الفرعي",
+    tax: "الضرائب",
+    total: "الإجمالي",
+    included: "شامل",
+    qty: "الكمية",
+    errName: "خطأ: الاسم غير صالح",
+    errPhone: "خطأ: صيغة الهاتف غير صحيحة",
+    errWilaya: "خطأ: يرجى تحديد الولاية",
+    bumpText: "+ طقم صيانة"
   }
 };
 

@@ -47,7 +47,7 @@ const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
                          </div>
                          <div>
                             <h3 className="font-bold uppercase">{initialProduct.name}</h3>
-                            <p className="text-xs font-mono text-gray-500 mb-2">QTY: 01</p>
+                            <p className="text-xs font-mono text-gray-500 mb-2">{t.qty}: 01</p>
                             <p className="font-mono font-bold">{initialProduct.price} DA</p>
                          </div>
                       </div>
@@ -55,19 +55,19 @@ const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
                    
                    <div className="space-y-2 font-mono text-sm uppercase">
                       <div className="flex justify-between">
-                         <span>Subtotal</span>
+                         <span>{t.subtotal}</span>
                          <span>{initialProduct.price} DA</span>
                       </div>
                       <div className="flex justify-between text-gray-500">
-                         <span>Shipping</span>
+                         <span>{t.shipping}</span>
                          <span>0.00 DA</span>
                       </div>
                       <div className="flex justify-between text-gray-500">
-                         <span>Tax</span>
-                         <span>INC.</span>
+                         <span>{t.tax}</span>
+                         <span>{t.included}</span>
                       </div>
                       <div className="border-t-2 border-fg pt-4 mt-4 flex justify-between text-lg font-bold">
-                         <span>TOTAL</span>
+                         <span>{t.total}</span>
                          <span>{initialProduct.price} DA</span>
                       </div>
                    </div>

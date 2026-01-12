@@ -102,7 +102,18 @@ export interface Translation {
   ticker: string;
   back: string;
   details: string;
-  selectLoadout: string; // "Choisir votre équipement"
+  selectLoadout: string;
   finalCtaTitle: string;
   finalCtaSub: string;
+
+  // New translations for missing parts
+  subtotal: string;
+  tax: string;
+  total: string;
+  included: string;
+  qty: string;
+  errName: string;
+  errPhone: string;
+  errWilaya: string;
+  bumpText: string; // "+ Maintenance Kit" text in message
 }
