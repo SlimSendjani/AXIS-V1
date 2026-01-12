@@ -3,23 +3,25 @@ import { Product, Wilaya, Translation, Language } from './types';
 export const BRAND_NAME = "AXIS";
 export const PHONE_NUMBER_WHATSAPP = "213555123456"; 
 
-// Images produits - URLs Pexels/Unsplash fiables
+// Images produits depuis le repo GitHub - URLs raw
+const REPO_BASE = "https://raw.githubusercontent.com/SlimSendjani/AXIS-V1/main";
+
 const PRODUCT_IMGS = {
-  // Gaine amincissante
-  shapewear: "https://images.pexels.com/photos/6311652/pexels-photo-6311652.jpeg?auto=compress&cs=tinysrgb&w=600",
-  shapewear2: "https://images.pexels.com/photos/6311387/pexels-photo-6311387.jpeg?auto=compress&cs=tinysrgb&w=600",
+  // Gaine amincissante (image femme bodysuit)
+  shapewear: `${REPO_BASE}/1e999d18-4d8d-4dc0-8b96-a8ec1e41df17.png`,
+  shapewear2: `${REPO_BASE}/3a16206c-2971-40da-9972-6bba3e835300.png`,
   
   // Correcteur de posture
-  posture: "https://images.pexels.com/photos/4498151/pexels-photo-4498151.jpeg?auto=compress&cs=tinysrgb&w=600",
-  posture2: "https://images.pexels.com/photos/4498155/pexels-photo-4498155.jpeg?auto=compress&cs=tinysrgb&w=600",
+  posture: `${REPO_BASE}/91155762-e3ed-4cd3-967b-94d45382b4f6.png`,
+  posture2: `${REPO_BASE}/91155762-e3ed-4cd3-967b-94d45382b4f6.png`,
   
   // Genouillère premium
-  knee: "https://images.pexels.com/photos/4498606/pexels-photo-4498606.jpeg?auto=compress&cs=tinysrgb&w=600",
-  knee2: "https://images.pexels.com/photos/6111616/pexels-photo-6111616.jpeg?auto=compress&cs=tinysrgb&w=600",
+  knee: `${REPO_BASE}/aebef839-045c-41b6-be23-609edac91b3d.png`,
+  knee2: `${REPO_BASE}/aebef839-045c-41b6-be23-609edac91b3d.png`,
   
   // Semelles orthopédiques
-  insoles: "https://images.pexels.com/photos/1456705/pexels-photo-1456705.jpeg?auto=compress&cs=tinysrgb&w=600",
-  insoles2: "https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&w=600"
+  insoles: `${REPO_BASE}/86d18a90-aaab-4a27-90bf-01668154280b.png`,
+  insoles2: `${REPO_BASE}/86d18a90-aaab-4a27-90bf-01668154280b.png`
 };
 
 export const TRANSLATIONS: Record<Language, Translation> = {
