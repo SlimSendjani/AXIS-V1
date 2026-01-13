@@ -1,10 +1,10 @@
 import { Product, Wilaya, Translation, Language } from './types';
 
-import imageShapewear from './1e999d18-4d8d-4dc0-8b96-a8ec1e41df17.png';
-import imageShapewear2 from './3a16206c-2971-40da-9972-6bba3e835300.png';
-import imagePosture from './91155762-e3ed-4cd3-967b-94d45382b4f6.png';
-import imageKnee from './aebef839-045c-41b6-be23-609edac91b3d.png';
-import imageInsoles from './86d18a90-aaab-4a27-90bf-01668154280b.png';
+import imageShapewear from './1e999d18-4d8d-4dc0-8b96-a8ec1e41df17.webp';
+import imageShapewear2 from './3a16206c-2971-40da-9972-6bba3e835300.webp';
+import imagePosture from './91155762-e3ed-4cd3-967b-94d45382b4f6.webp';
+import imageKnee from './aebef839-045c-41b6-be23-609edac91b3d.webp';
+import imageInsoles from './86d18a90-aaab-4a27-90bf-01668154280b.webp';
 
 export const BRAND_NAME = "AXIS";
 export const PHONE_NUMBER_WHATSAPP = "213555123456";
