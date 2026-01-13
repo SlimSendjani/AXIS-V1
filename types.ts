@@ -87,6 +87,7 @@ export interface Product {
   id: string;
   name: string;
   tagline: string;
+  techBadge?: string;
   price: number;
   oldPrice: number;
   shortDesc: string;

@@ -47,6 +47,8 @@
     :root {
       --bg-color: #FFFFFF;
       --text-color: #000000;
+      --grid-color: #1a1a1a;
+      --grid-size: 80px;
     }
 
     body {
@@ -56,6 +58,87 @@
       overflow-x: hidden;
     }
 
+    /* === TECHNICAL GRID BACKGROUND === */
+    .technical-grid {
+      position: relative;
+    }
+
+    .technical-grid::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+      background-size: var(--grid-size) var(--grid-size);
+      opacity: 0.04;
+    }
+
+    /* === STICKY SECTION TITLES === */
+    .section-with-sticky-title {
+      position: relative;
+    }
+
+    @media (min-width: 1024px) {
+      .sticky-section-title {
+        position: sticky;
+        top: 120px;
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        transform: rotate(180deg);
+        height: fit-content;
+        padding: 1rem 0;
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        opacity: 0.6;
+        font-weight: 700;
+        font-family: 'JetBrains Mono', monospace;
+      }
+
+      .section-content-with-sticky {
+        display: grid;
+        grid-template-columns: 60px 1fr;
+        gap: 2rem;
+      }
+    }
+
+    /* === ASYMMETRIC PRODUCT GRID === */
+    .asymmetric-grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 768px) {
+      .asymmetric-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+      }
+
+      .asymmetric-grid .product-card:nth-child(4n+1) {
+        grid-column: span 2;
+      }
+
+      .asymmetric-grid .product-card:nth-child(4n+2) {
+        grid-column: span 1;
+      }
+
+      .asymmetric-grid .product-card:nth-child(4n+3) {
+        grid-column: span 1;
+      }
+
+      .asymmetric-grid .product-card:nth-child(4n+4) {
+        grid-column: span 2;
+      }
+    }
+
+    /* === BASE STYLES === */
     .border-axis {
       border: 2px solid #000000;
     }
@@ -106,12 +189,446 @@
       border-color: #D4AF37 !important;
       box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1) !important;
     }
+
+    /* === TECHNICAL BADGES === */
+    .tech-badge {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.45;
+      margin-bottom: 6px;
+      color: currentColor;
+    }
+
+    /* === HYPER-RELIEF 3D EFFECT (Premium) === */
+    .product-card {
+      position: relative;
+      /* Default: flat, no shadow */
+      transform: scale(1) translateZ(0);
+      box-shadow: none;
+      transition:
+        transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform, box-shadow;
+    }
+
+    .product-image-container {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    /* Default State: Grayscale, dramatic architectural look */
+    .product-image-container .product-image {
+      transition:
+        transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        filter 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: grayscale(100%) contrast(1.1);
+      transform: scale(1);
+    }
+
+    /* Active State: Hover (Desktop) OR Touch (Mobile via JS class) */
+    .product-card:hover,
+    .product-card.is-touch-active {
+      /* 3D Lift Effect */
+      transform: scale(1.03) translateY(-10px);
+      /* Deep soft shadow for realistic relief */
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .product-card:hover .product-image-container .product-image,
+    .product-card.is-touch-active .product-image-container .product-image {
+      /* Color Reveal - instant vibrant colors */
+      filter: grayscale(0%) contrast(1);
+      transform: scale(1.02);
+    }
+
+    /* === SHIMMER LIGHT EFFECT (Premium touch) === */
+    .product-image-container::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg,
+          transparent 0%,
+          transparent 40%,
+          rgba(255, 255, 255, 0.4) 50%,
+          transparent 60%,
+          transparent 100%);
+      transform: translateX(-150%);
+      pointer-events: none;
+      z-index: 15;
+      transition: none;
+    }
+
+    .product-card:hover .product-image-container::after,
+    .product-card.is-touch-active .product-image-container::after {
+      animation: shimmerSweep 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes shimmerSweep {
+      0% {
+        transform: translateX(-150%);
+      }
+
+      100% {
+        transform: translateX(150%);
+      }
+    }
+
+    /* === TRUST BADGES === */
+    .product-cert-badge {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      color: white;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      padding: 6px 10px;
+      text-transform: uppercase;
+      z-index: 5;
+    }
+
+    .clinical-rating {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      opacity: 0.6;
+      margin-top: 8px;
+    }
+
+    .clinical-rating svg {
+      color: #00AA00;
+    }
+
+    /* === REASSURANCE BAR === */
+    .reassurance-bar {
+      background: #000;
+      color: rgba(255, 255, 255, 0.7);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-align: center;
+      padding: 10px 16px;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* === ENHANCED TYPOGRAPHY === */
+    h1,
+    h2 {
+      letter-spacing: 0.12em;
+    }
+
+    /* === NOISE TEXTURE OVERLAY === */
+    .noise-texture::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    /* === PREMIUM CTA BUTTONS === */
+    .btn-premium-glow {
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+
+    .btn-premium-glow::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg,
+          rgba(255, 255, 255, 0.15) 0%,
+          transparent 50%,
+          rgba(255, 255, 255, 0.05) 100%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .btn-premium-glow:hover {
+      box-shadow: inset 0 0 25px rgba(255, 255, 255, 0.2);
+      letter-spacing: 0.18em;
+    }
+
+    .btn-premium-glow:hover::before {
+      opacity: 1;
+    }
+
+    .btn-industrial:hover {
+      box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.15);
+    }
+
+    /* === INDUSTRIAL CTA BUTTON === */
+    .btn-industrial {
+      position: relative;
+      overflow: hidden;
+      background: transparent;
+      cursor: crosshair;
+    }
+
+    .btn-industrial::before,
+    .btn-industrial::after {
+      content: '';
+      position: absolute;
+      background: #000000;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Top border animation */
+    .btn-industrial::before {
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+    }
+
+    /* Bottom border animation */
+    .btn-industrial::after {
+      bottom: 0;
+      right: 0;
+      width: 0;
+      height: 2px;
+    }
+
+    .btn-industrial:hover::before {
+      width: 100%;
+    }
+
+    .btn-industrial:hover::after {
+      width: 100%;
+    }
+
+    .btn-industrial:hover {
+      background: #000000;
+      color: #FFFFFF;
+      border-color: #000000;
+    }
+
+    .btn-industrial-text {
+      position: relative;
+      z-index: 1;
+      transition: color 0.3s ease;
+    }
+
+    .btn-industrial:hover .btn-industrial-text {
+      color: #FFFFFF;
+    }
+
+    /* Side borders animation - additional pseudo elements via wrapper */
+    .btn-industrial {
+      --border-width: 0%;
+    }
+
+    .btn-industrial:hover {
+      --border-width: 100%;
+    }
+
+    .btn-industrial {
+      background-image:
+        linear-gradient(#000, #000),
+        linear-gradient(#000, #000);
+      background-size:
+        2px var(--border-width),
+        2px var(--border-width);
+      background-position:
+        0 100%,
+        100% 0;
+      background-repeat: no-repeat;
+    }
+
+    /* === SPEC CARDS (CAD Style) === */
+    .spec-card {
+      background: #FFFFFF;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .spec-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 0;
+      background: #D4AF37;
+      transition: height 0.3s ease;
+    }
+
+    .spec-card:hover {
+      border-color: rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .spec-card:hover::before {
+      height: 100%;
+    }
+
+    .spec-icon {
+      flex-shrink: 0;
+      color: #000000;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    .spec-card:hover .spec-icon {
+      opacity: 1;
+    }
+
+    /* === REVIEWS / PERFORMANCE REPORTS === */
+    .reviews-section {
+      background-color: #050505;
+    }
+
+    .performance-report {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .performance-report:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(0, 170, 0, 0.3);
+    }
+
+    /* Status dot with pulsing animation */
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background: #00AA00;
+      border-radius: 50%;
+      animation: statusPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes statusPulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        box-shadow: 0 0 0 0 rgba(0, 170, 0, 0.7);
+      }
+
+      50% {
+        opacity: 0.7;
+        box-shadow: 0 0 0 4px rgba(0, 170, 0, 0);
+      }
+    }
+
+    /* === CTA GLOW BUTTON === */
+    .btn-glow {
+      position: relative;
+      box-shadow:
+        inset 0 0 20px rgba(212, 175, 55, 0.15),
+        0 0 30px rgba(212, 175, 55, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .btn-glow::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg,
+          rgba(212, 175, 55, 0.1) 0%,
+          transparent 50%,
+          rgba(212, 175, 55, 0.05) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .btn-glow:hover {
+      box-shadow:
+        inset 0 0 30px rgba(212, 175, 55, 0.25),
+        0 0 40px rgba(212, 175, 55, 0.2),
+        0 0 60px rgba(212, 175, 55, 0.1);
+    }
+
+    .btn-glow:hover::before {
+      opacity: 1;
+    }
+
+    /* === ALGERIA MAP === */
+    .algeria-map-container {
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+
+    .algeria-map-container:hover {
+      opacity: 1;
+    }
+
+    .algeria-map-container svg {
+      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
+    }
   </style>
 </head>
 
 <body>
   <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
+
+  <!-- Hyper-Relief 3D Touch Handler for Mobile -->
+  <script>
+      (function () {
+        'use strict';
+
+        // Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', function () {
+          // Use event delegation on document for dynamically rendered cards
+          document.addEventListener('touchstart', function (e) {
+            const card = e.target.closest('.product-card');
+            if (card) {
+              card.classList.add('is-touch-active');
+            }
+          }, { passive: true });
+
+          document.addEventListener('touchend', function (e) {
+            const card = e.target.closest('.product-card');
+            if (card) {
+              card.classList.remove('is-touch-active');
+            }
+          }, { passive: true });
+
+          document.addEventListener('touchcancel', function (e) {
+            const card = e.target.closest('.product-card');
+            if (card) {
+              card.classList.remove('is-touch-active');
+            }
+          }, { passive: true });
+
+          // Fallback for mousedown/mouseup on touch devices
+          document.addEventListener('mousedown', function (e) {
+            // Only trigger on touch devices where we don't have hover
+            if ('ontouchstart' in window) {
+              const card = e.target.closest('.product-card');
+              if (card) {
+                card.classList.add('is-touch-active');
+              }
+            }
+          });
+
+          document.addEventListener('mouseup', function () {
+            if ('ontouchstart' in window) {
+              document.querySelectorAll('.product-card.is-touch-active').forEach(function (card) {
+                card.classList.remove('is-touch-active');
+              });
+            }
+          });
+        });
+      })();
+  </script>
 </body>
 
 </html>

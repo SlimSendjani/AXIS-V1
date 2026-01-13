@@ -40,7 +40,7 @@ const Layout: React.FC<LayoutProps> = ({ children, t, lang, changeLang }) => {
   const currentLang = LANGUAGES.find(l => l.code === lang);
 
   return (
-    <div className={`min-h-screen bg-bg text-fg ${lang === 'ar' ? 'font-sans' : ''} flex flex-col`}>
+    <div className={`min-h-screen bg-bg text-fg technical-grid noise-texture ${lang === 'ar' ? 'font-sans' : ''} flex flex-col`}>
       {/* Brutalist Ticker */}
       <div className="bg-fg text-bg py-2 overflow-hidden whitespace-nowrap sticky top-0 z-50 border-b border-fg">
         <div className="animate-marquee inline-block text-xs font-mono font-bold uppercase tracking-widest">
@@ -108,30 +108,86 @@ const Layout: React.FC<LayoutProps> = ({ children, t, lang, changeLang }) => {
         </div>
       </nav>
 
+      {/* Reassurance Bar - Trust Indicators */}
+      <div className="reassurance-bar">
+        {lang === 'ar'
+          ? 'توصيل آمن على كامل التراب // ضمان 30 يوم // دعم متخصص'
+          : 'LIVRAISON SÉCURISÉE SUR TOUT LE TERRITOIRE // GARANTIE ARCHITECTURE 30 JOURS // SUPPORT EXPERT'
+        }
+      </div>
+
       <main className="flex-grow">
         {children}
       </main>
 
-      {/* Footer Massif */}
-      <footer className="bg-fg text-bg pt-20 pb-8">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
+      {/* Footer Ultra Premium */}
+      <footer className="bg-fg text-bg pt-16 pb-8 relative overflow-hidden">
+        {/* Algeria Map Watermark - Architectural Signature */}
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] opacity-[0.03] pointer-events-none">
+          <svg viewBox="0 0 100 120" fill="none" stroke="currentColor" className="w-full h-full">
+            {/* Accurate Algeria Silhouette */}
+            <path
+              d="M15 10 L20 8 L35 6 L50 5 L65 6 L80 8 L88 12 L90 18 L92 30 L90 45 L88 55 L85 65 L80 75 L72 82 L65 88 L55 95 L45 100 L35 102 L25 100 L18 95 L12 85 L8 70 L6 55 L8 40 L10 25 L12 15 L15 10 Z"
+              strokeWidth="0.5"
+              className="opacity-60"
+            />
+          </svg>
+        </div>
+
+        <div className="container mx-auto px-6 relative z-10">
+          {/* Brand Header */}
+          <div className="mb-12">
+            <h2 className="text-5xl md:text-7xl font-display leading-none tracking-tight mb-3">{BRAND_NAME}</h2>
+            <p className="font-mono text-xs uppercase opacity-50 tracking-widest">
+              {lang === 'ar' ? 'معدات الأداء للهيكل البشري الحديث' : 'PERFORMANCE EQUIPMENT FOR THE MODERN HUMAN STRUCTURE'}
+            </p>
+          </div>
+
+          {/* 3-Column Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16 border-t border-bg/10 pt-12">
+            {/* Column 1: Navigation */}
             <div>
-              <h2 className="text-6xl md:text-9xl font-display leading-none tracking-tighter mb-4">{BRAND_NAME}</h2>
-              <p className="font-mono text-xs max-w-sm uppercase opacity-70">
-                {lang === 'ar' ? 'معدات الأداء للهيكل البشري الحديث.' : 'Performance equipment for the modern human structure.'}
-              </p>
+              <h4 className="font-mono text-[10px] uppercase tracking-[0.2em] opacity-40 mb-6">NAVIGATION</h4>
+              <ul className="space-y-3">
+                <li><a href="/#products" className="text-sm font-medium hover:opacity-60 transition-opacity">{lang === 'ar' ? 'الترسانة' : "L'Arsenal"}</a></li>
+                <li><a href="#" className="text-sm font-medium hover:opacity-60 transition-opacity">{lang === 'ar' ? 'المهمة' : 'La Mission'}</a></li>
+                <li><a href="#" className="text-sm font-medium hover:opacity-60 transition-opacity">Contact</a></li>
+              </ul>
             </div>
-            <div className="flex flex-col justify-end md:items-end gap-4">
-              <a href="#" className="text-xl font-bold uppercase hover:text-concrete transition-colors">Instagram</a>
-              <a href="#" className="text-xl font-bold uppercase hover:text-concrete transition-colors">{lang === 'ar' ? 'الدعم' : 'Support'}</a>
-              <a href="#" className="text-xl font-bold uppercase hover:text-concrete transition-colors">{lang === 'ar' ? 'قانوني' : 'Legal'}</a>
+
+            {/* Column 2: Legal & Security */}
+            <div>
+              <h4 className="font-mono text-[10px] uppercase tracking-[0.2em] opacity-40 mb-6">{lang === 'ar' ? 'القانون والأمان' : 'LÉGAL & SÉCURITÉ'}</h4>
+              <ul className="space-y-3">
+                <li><a href="#" className="text-sm font-medium hover:opacity-60 transition-opacity">{lang === 'ar' ? 'الشروط العامة للبيع' : 'CGV'}</a></li>
+                <li><a href="#" className="text-sm font-medium hover:opacity-60 transition-opacity">{lang === 'ar' ? 'سياسة الخصوصية' : 'Politique de Confidentialité'}</a></li>
+                <li><a href="#" className="text-sm font-medium hover:opacity-60 transition-opacity">{lang === 'ar' ? 'الدفع عند الاستلام' : 'Paiement à la Livraison Sécurisé'}</a></li>
+              </ul>
+            </div>
+
+            {/* Column 3: AXIS HQ */}
+            <div>
+              <h4 className="font-mono text-[10px] uppercase tracking-[0.2em] opacity-40 mb-6">AXIS HQ</h4>
+              <div className="space-y-2">
+                <p className="text-sm font-medium">{lang === 'ar' ? 'الجزائر العاصمة، الجزائر' : 'Alger, Algérie'}</p>
+                <p className="font-mono text-[10px] opacity-50 tracking-wide">
+                  {lang === 'ar' ? '"مهندسو الجسم منذ 2023"' : '"Architectes du Corps depuis 2023"'}
+                </p>
+              </div>
+              <div className="mt-6 flex items-center gap-2">
+                <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
+                <span className="font-mono text-[10px] uppercase tracking-widest opacity-60">58 WILAYAS COVERED</span>
+              </div>
             </div>
           </div>
 
-          <div className="border-t border-bg/20 pt-8 flex flex-col md:flex-row justify-between items-center font-mono text-[10px] uppercase">
+          {/* Bottom Bar */}
+          <div className="border-t border-bg/10 pt-6 flex flex-col md:flex-row justify-between items-center font-mono text-[10px] uppercase tracking-widest opacity-50">
             <p>AXIS CORP © 2026. {lang === 'ar' ? 'الجزائر' : 'ALGIERS HQ'}.</p>
-            <p>{lang === 'ar' ? 'حالة النظام: متصل' : 'SYSTEM STATUS: ONLINE'}</p>
+            <p className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-success rounded-full"></span>
+              {lang === 'ar' ? 'حالة النظام: متصل' : 'SYSTEM STATUS: ONLINE'}
+            </p>
           </div>
         </div>
       </footer>
