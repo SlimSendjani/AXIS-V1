@@ -111,8 +111,8 @@ const Layout: React.FC<LayoutProps> = ({ children, t, lang, changeLang }) => {
       {/* Reassurance Bar - Trust Indicators */}
       <div className="reassurance-bar">
         {lang === 'ar'
-          ? 'توصيل آمن 58 ولاية // ضمان 30 يوم // دعم متخصص'
-          : 'LIVRAISON SÉCURISÉE 58 WILAYAS // GARANTIE 30 JOURS // SUPPORT EXPERT'
+          ? 'توصيل آمن 58 ولاية // إرجاع مجاني // دعم متخصص'
+          : 'LIVRAISON SÉCURISÉE 58 WILAYAS // RETOURS GRATUITS // SUPPORT EXPERT'
         }
       </div>
 
@@ -149,7 +149,7 @@ const Layout: React.FC<LayoutProps> = ({ children, t, lang, changeLang }) => {
             <div>
               <h4 className="font-mono text-[10px] uppercase tracking-[0.2em] opacity-40 mb-6">NAVIGATION</h4>
               <ul className="space-y-3">
-                <li><a href="/#products" className="text-sm font-medium hover:opacity-60 transition-opacity">{lang === 'ar' ? 'الترسانة' : "L'Arsenal"}</a></li>
+                <li><a href="/#products" className="text-sm font-medium hover:opacity-60 transition-opacity">{lang === 'ar' ? 'منتجاتنا' : "Nos Produits"}</a></li>
                 <li><a href="#" className="text-sm font-medium hover:opacity-60 transition-opacity">{lang === 'ar' ? 'المهمة' : 'La Mission'}</a></li>
                 <li><a href="#" className="text-sm font-medium hover:opacity-60 transition-opacity">Contact</a></li>
               </ul>

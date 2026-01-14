@@ -82,7 +82,7 @@ export const getWilayaName = (wilayaCode: string): string => {
 
 export const TRANSLATIONS: Record<Language, Translation> = {
   fr: {
-    navShop: "ARSENAL",
+    navShop: "PRODUITS",
     navAbout: "VISION",
     heroTitle: "BÂTISSEZ\nVOTRE HÉRITAGE.",
     heroSubtitle: "Ne laissez pas la gravité écraser votre structure. Redressez-vous. Dominez. Équipements de correction anatomique de haute précision.",
@@ -99,7 +99,7 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     problemText: "La sédentarité est un poison lent. Votre dos se voûte. Vos articulations s'usent prématurément. Votre présence s'efface. C'est inacceptable.",
     problem1: "DÉGRADATION PHYSIQUE",
     problem2: "PERTE DE PUISSANCE",
-    productsTitle: "L'ARSENAL",
+    productsTitle: "NOS PRODUITS",
     productsSubtitle: "QUANTITÉ LIMITÉE / LOT 04",
     addToCart: "AJOUTER",
     buyNow: "ACHETER",
@@ -164,7 +164,7 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     syncingOrder: "Synchronisation avec Google Sheets..."
   },
   en: {
-    navShop: "ARSENAL",
+    navShop: "PRODUCTS",
     navAbout: "VISION",
     heroTitle: "BUILD YOUR\nLEGACY.",
     heroSubtitle: "Don't let gravity crush your structure. Stand tall. Dominate. High-precision anatomical correction gear.",
@@ -181,7 +181,7 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     problemText: "Sedentary life is a slow poison. Your back hunches. Your joints wear out prematurely. Your presence fades. This is unacceptable.",
     problem1: "PHYSICAL DECAY",
     problem2: "POWER LOSS",
-    productsTitle: "THE ARSENAL",
+    productsTitle: "OUR PRODUCTS",
     productsSubtitle: "LIMITED BATCH / 04",
     addToCart: "ADD",
     buyNow: "ACQUIRE",
@@ -246,7 +246,7 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     syncingOrder: "Syncing with Google Sheets..."
   },
   ar: {
-    navShop: "الترسانة",
+    navShop: "المنتجات",
     navAbout: "الرؤية",
     heroTitle: "اصنع\nهيبتك.",
     heroSubtitle: "لا تدع الجاذبية تحطم قامتك. قف بشموخ. وسيطر. معدات تصحيح تشريحية عالية الدقة للنخبة.",
@@ -263,7 +263,7 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     problemText: "نمط الحياة الخامل سم بطيء. ظهرك ينحني. مفاصلك تتآكل قبل الأوان. وهيبتك تتلاشى. هذا أمر مرفوض.",
     problem1: "التدهور الجسدي",
     problem2: "فقدان القوة",
-    productsTitle: "الترسانة",
+    productsTitle: "منتجاتنا",
     productsSubtitle: "كمية محدودة / الدفعة 04",
     addToCart: "إضافة",
     buyNow: "امتلك الآن",
