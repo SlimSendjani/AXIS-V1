@@ -56,7 +56,7 @@ const Home: React.FC<HomeProps> = ({ t, products }) => {
       </section>
 
       {/* Problem */}
-      <section className="py-32 md:py-40 px-6">
+      <section className="py-20 md:py-28 px-6">
         <div className="container mx-auto max-w-6xl">
           <h2 className="text-6xl md:text-8xl font-display tracking-tighter mb-8">{t.problemTitle}</h2>
           <p className="text-lg max-w-2xl mb-12 leading-relaxed">{t.problemText}</p>
@@ -74,7 +74,7 @@ const Home: React.FC<HomeProps> = ({ t, products }) => {
       </section>
 
       {/* Products */}
-      <section id="products" className="py-32 md:py-40 px-6 bg-bg/50 section-with-sticky-title">
+      <section id="products" className="py-20 md:py-28 px-6 bg-bg/50 section-with-sticky-title">
         <div className="container mx-auto max-w-7xl">
           <div className="section-content-with-sticky">
             {/* Sticky Title - Only visible on desktop */}

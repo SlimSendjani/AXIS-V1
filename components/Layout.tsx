@@ -111,8 +111,8 @@ const Layout: React.FC<LayoutProps> = ({ children, t, lang, changeLang }) => {
       {/* Reassurance Bar - Trust Indicators */}
       <div className="reassurance-bar">
         {lang === 'ar'
-          ? 'توصيل آمن على كامل التراب // ضمان 30 يوم // دعم متخصص'
-          : 'LIVRAISON SÉCURISÉE SUR TOUT LE TERRITOIRE // GARANTIE ARCHITECTURE 30 JOURS // SUPPORT EXPERT'
+          ? 'توصيل آمن 58 ولاية // ضمان 30 يوم // دعم متخصص'
+          : 'LIVRAISON SÉCURISÉE 58 WILAYAS // GARANTIE 30 JOURS // SUPPORT EXPERT'
         }
       </div>
 
