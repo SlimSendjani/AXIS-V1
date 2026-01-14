@@ -4,7 +4,7 @@ import { resolve } from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/AXIS-V1/',  // CRITICAL: GitHub Pages needs this!
+  base: '/',  // CUSTOM DOMAIN: axis-dz.com (root path)
   publicDir: 'public',
   build: {
     outDir: 'dist',
