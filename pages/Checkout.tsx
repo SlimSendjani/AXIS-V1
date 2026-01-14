@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Package, Truck, MapPin, User, Phone, CheckCircle, AlertCircle } from 'lucide-react';
 import { Translation, Product, Language } from '../types';
 import { useCart } from '../contexts/CartContext';
-import { WILAYAS, getShippingPrice, calculateShipping, FREE_SHIPPING_THRESHOLD, PHONE_NUMBER_WHATSAPP, getWilayaName } from '../constants';
-import { submitOrder, generateOrderNumber, generateWhatsAppMessage, OrderData } from '../services/orderService';
+import { WILAYAS, getShippingPrice, calculateShipping, FREE_SHIPPING_THRESHOLD, getWilayaName } from '../constants';
+import { submitOrder, generateOrderNumber, OrderData } from '../services/orderService';
 import { getProducts, TRANSLATIONS } from '../constants';
 
 
@@ -106,11 +106,7 @@ const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
       setOrderNumber(newOrderNumber);
       setOrderSuccess(true);
       clearCart();
-
-      // Ouvrir WhatsApp avec le message
-      const whatsappMessage = generateWhatsAppMessage(orderData, lang);
-      const whatsappUrl = `https://wa.me/${PHONE_NUMBER_WHATSAPP}?text=${encodeURIComponent(whatsappMessage)}`;
-      window.open(whatsappUrl, '_blank');
+      // Order confirmed - no redirect needed
     } catch (error) {
       console.error('Order error:', error);
     } finally {
