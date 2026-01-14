@@ -29,7 +29,7 @@ export interface OrderData {
 }
 
 // URL de votre Google Apps Script Web App
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRRi6b4zpGsi7DmUfE2oUGpGztGuLe6XMrivclf5OOgrTXw2nnOYHoFbV5ODz6lCDQhA/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzyHyzZGtXJht7ZcuNrCKR9yPwm8Lis8fMjsh4HvYIeUbJ45Cc38OtsziRWVbIjX2_VCw/exec';
 
 export const generateOrderNumber = (): string => {
   const timestamp = Date.now().toString(36).toUpperCase();
