@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Package, Truck, MapPin, User, Phone, CheckCircle, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Package, Truck, MapPin, User, Phone, CheckCircle, AlertCircle, Mail } from 'lucide-react';
 import { Translation, Product, Language } from '../types';
 import { useCart } from '../contexts/CartContext';
 import { WILAYAS, getShippingPrice, calculateShipping, FREE_SHIPPING_THRESHOLD, getWilayaName } from '../constants';
 import { submitOrder, generateOrderNumber, OrderData } from '../services/orderService';
 import { getProducts, TRANSLATIONS } from '../constants';
+import { prepareTrackingData, firePixelPurchaseEvent, FacebookTrackingData } from '../utils/facebookTracking';
 
 
 interface CheckoutProps {
@@ -23,6 +24,7 @@ const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
 
   const [formData, setFormData] = useState({
     fullName: '',
+    email: '',
     phone: '',
     wilayaCode: '',
     address: '',
@@ -79,12 +81,28 @@ const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
     setIsSubmitting(true);
 
     const newOrderNumber = generateOrderNumber();
+    const wilayaName = getWilayaName(formData.wilayaCode);
+
+    // Prepare Facebook tracking data for CAPI
+    const trackingData: FacebookTrackingData = prepareTrackingData({
+      email: formData.email || undefined,
+      phone: formData.phone,
+      fullName: formData.fullName,
+      wilayaName: wilayaName,
+      wilayaCode: formData.wilayaCode,
+      items: items.map(item => ({
+        productId: item.product.id,
+        quantity: item.quantity
+      })),
+      total,
+    });
 
     const orderData: OrderData = {
       fullName: formData.fullName,
+      email: formData.email,
       phone: formData.phone,
       wilayaCode: formData.wilayaCode,
-      wilayaName: getWilayaName(formData.wilayaCode),
+      wilayaName: wilayaName,
       address: formData.address,
       deliveryType: formData.deliveryType,
       items: items.map(item => ({
@@ -98,10 +116,14 @@ const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
       total,
       orderDate: new Date().toLocaleString('fr-DZ'),
       orderNumber: newOrderNumber,
-      notes: formData.notes
+      notes: formData.notes,
+      trackingData, // Include Facebook tracking data
     };
 
     try {
+      // Fire client-side Pixel event (for deduplication with server CAPI)
+      firePixelPurchaseEvent(trackingData);
+
       await submitOrder(orderData);
       setOrderNumber(newOrderNumber);
       setOrderSuccess(true);
@@ -181,6 +203,22 @@ const Checkout: React.FC<CheckoutProps> = ({ t, products, lang }) => {
                   placeholder={isAr ? 'الاسم الكامل' : 'Nom complet'}
                 />
                 {errors.fullName && <p className="text-error text-xs mt-1 font-mono">{errors.fullName}</p>}
+              </div>
+
+              {/* Email (optionnel - améliore le tracking) */}
+              <div>
+                <label className="block font-mono text-xs uppercase tracking-wider mb-2">
+                  <Mail size={14} className="inline mr-2" />
+                  {isAr ? 'البريد الإلكتروني (اختياري)' : 'Email (optionnel)'}
+                </label>
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full bg-transparent border-2 border-fg/50 px-4 py-3 font-mono focus:outline-none focus:border-gold transition-colors"
+                  placeholder={isAr ? 'example@email.com' : 'example@email.com'}
+                  dir="ltr"
+                />
               </div>
 
               {/* Téléphone */}

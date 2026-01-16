@@ -3,6 +3,7 @@
 export interface OrderData {
   // Infos client
   fullName: string;
+  email?: string;
   phone: string;
   wilayaCode: string;
   wilayaName: string;
@@ -26,6 +27,26 @@ export interface OrderData {
   orderDate: string;
   orderNumber: string;
   notes?: string;
+
+  // Facebook Tracking Data (for CAPI)
+  trackingData?: {
+    email?: string;
+    phone: string;
+    firstName: string;
+    lastName: string;
+    city: string;
+    zipCode?: string;
+    country: string;
+    clientUserAgent: string;
+    fbp: string | null;
+    fbc: string | null;
+    eventId: string;
+    eventSourceUrl: string;
+    value: number;
+    currency: string;
+    contentIds: string[];
+    numItems: number;
+  };
 }
 
 // URL de votre Google Apps Script Web App
